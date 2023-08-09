@@ -1,0 +1,13 @@
+:host {
+	display: block;
+	padding: 1rem;
+}
+
+.product-list {
+	display: grid;
+	grid-template-columns: repeat(5, 300px 0);
+	grid-template-rows: repeat(3, 400px auto);
+	gap: 1rem;
+	justify-content: center;
+	align-items: flex-start;
+}

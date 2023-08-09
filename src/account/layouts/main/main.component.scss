@@ -1,0 +1,13 @@
+:host {
+	display: block;
+}
+
+section {
+	display: flex;
+	flex-direction: column;
+
+	.h-custom {
+		margin-top: auto;
+		margin-bottom: auto;
+	}
+}

@@ -1,0 +1,7 @@
+<p>product-list works!</p>
+
+<div class="product-list">
+	<ng-container *ngFor="let product of products; trackBy:identify">
+		<eb-product-item *ngIf="!!product" [product]="product"></eb-product-item>
+	</ng-container>
+</div>

@@ -1,0 +1,8 @@
+{
+	"remoteServiceBaseUrl": "https://fakestoreapi.com/",
+	"appBaseUrl": "http://localhost:4200",
+	"localeMappings": [
+		{ "from": "tr-TR", "to": "tr" },
+		{ "from": "en-US", "to": "en" }
+	]
+}

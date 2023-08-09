@@ -1,0 +1,27 @@
+@import 'primeicons/primeicons.css';
+
+body {
+	font-family: var(--font-family);
+}
+
+/*#region Custom Scroolbar Styles */
+
+::-webkit-scrollbar {
+	&,
+	&-corner {
+		width: 1rem;
+		background-color: #313642;
+	}
+
+	&-thumb {
+		background-color: rgba(255, 255, 255, 0.1);
+		min-height: 5rem;
+		box-shadow: 0px 0px 0.625rem rgba(0, 0, 0, 0.5);
+
+		&:hover {
+			background-color: rgba(255, 255, 255, 0.2);
+		}
+	}
+}
+
+/*#endregion */
