@@ -19,7 +19,7 @@ export class ProductDetailComponent implements OnInit {
 	imgNotFounded: boolean = false;
 	quantity!: number;
 	loremText: string = `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, quos aspernatur eum dolorr eprehenderit eos et libero debitis itaque voluptatem! Laudantium modi sequi, id numquam liberosed quaerat. Eligendi, ipsum!`;
-	categoryProducts: IProduct[] = [];
+	categoryRelatedProducts: IProduct[] = [];
 	isProductInWishList: boolean = false;
 	productInCartList: any;
 
@@ -50,7 +50,7 @@ export class ProductDetailComponent implements OnInit {
 
 	getProductsByCategory(category: string) {
 		this.productService.getProductsWithCategory(category).subscribe((data) => {
-			this.categoryProducts = data;
+			this.categoryRelatedProducts = data.filter((item) => item.id !== this.product.id);
 		});
 	}
 

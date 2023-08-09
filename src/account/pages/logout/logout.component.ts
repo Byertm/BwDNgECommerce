@@ -12,9 +12,7 @@ export class LogoutComponent implements OnInit {
 	constructor(private router: Router, private authenticationService: AuthService, private primeToastService: PrimeToastService) {}
 
 	logout() {
-		console.log({ isLogged: this.authenticationService.getLogged() });
-
-		if (this.authenticationService.getLogged()) {
+		if (this.authenticationService.isLogged) {
 			this.authenticationService.logout();
 			this.router.navigateByUrl('/auth');
 			this.primeToastService.success({ summary: 'Çıkış yapma işlemi başarıyla simule edildi. Yönlendiriliyorsunuz!', position: 'bottom-left' });

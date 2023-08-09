@@ -18,9 +18,6 @@ export class ErrorPageComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		this.type = this.route.snapshot.paramMap.get('type');
 
-		debugger;
-		console.log(this.type);
-
 		this.sub = this.route.data.subscribe((param: Data) => {
 			if (param['type']) this.type = param['type'];
 			if (param['title']) this.title = param['title'];
@@ -39,7 +36,6 @@ export class ErrorPageComponent implements OnInit, OnDestroy {
 				break;
 
 			default:
-				// if (!this.type)
 				this.type = 'Ooops..';
 				if (!this.title) this.title = 'Something went wrong';
 				if (!this.desc) this.desc = 'Looks like something went wrong.<br>' + "We're working on it";

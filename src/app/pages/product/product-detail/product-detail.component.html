@@ -25,17 +25,17 @@
 				<article class="ps-lg-3">
 					<h4 class="title text-dark">{{ product.title }}</h4>
 
-					<div class="rating-wrap my-3">
-						<div class="d-inline-flex justify-content-start align-items-center gap-2">
+					<div class="rating-wrap my-3 text-center text-sm-start">
+						<div class="d-inline-flex flex-column flex-md-row justify-content-center justify-content-md-start align-items-center gap-2">
 							<p-rating [(ngModel)]="product.rating.rate" [readonly]="true" [cancel]="false"></p-rating>
 
 							<b class="label-rating text-warning"> {{ product.rating.rate }}</b>
 
-							<i class="dot"></i>
+							<i class="dot d-none d-md-inline"></i>
 
-							<span class="label-rating text-muted"> <i class="fa fa-shopping-basket"></i> {{ product.rating.count }} kişi oy verdi </span>
+							<span class="label-rating text-muted"> <i class="pi pi-shopping-basket"></i> {{ product.rating.count }} kişi oy verdi </span>
 
-							<i class="dot"></i>
+							<i class="dot d-none d-md-inline"></i>
 
 							<span class="label-rating text-success">Stokta var</span>
 						</div>
@@ -75,16 +75,16 @@
 					</div>
 
 					<a href="#" (click)="$event.preventDefault(); addProductToCart(product)" class="btn btn-warning me-2">
-						<i class="me-1 fa fa-shopping-basket"></i>
+						<i class="me-1 pi pi-shopping-basket"></i>
 						{{ productInCartList ? 'Added to cart' : 'Add to cart' }}
 					</a>
 
 					<!-- <a *ngIf="!isProductInWishList" href="#" (click)="$event.preventDefault(); addProductToWishList(product)" class="btn btn-light me-2">
-						<i class="fa-regular fa-heart text-danger"></i>
+						<i class="pi pi-heart text-danger"></i>
 						Save
 					</a> -->
 
-					<a *ngIf="isProductInWishList" href="#" (click)="$event.preventDefault(); addProductToWishList(product)" class="btn btn-light me-2"> <i class="me-1 fa fa-heart text-danger"></i> Saved </a>
+					<a *ngIf="isProductInWishList" href="#" (click)="$event.preventDefault(); addProductToWishList(product)" class="btn btn-light me-2"> <i class="me-1 pi pi-heart text-danger"></i> Saved </a>
 				</article>
 			</main>
 		</div>
@@ -96,7 +96,7 @@
 			</div>
 
 			<div class="related-product-wrapper">
-				<ng-container *ngFor="let product of categoryProducts; trackBy:identify">
+				<ng-container *ngFor="let product of categoryRelatedProducts; trackBy:identify">
 					<eb-product-item *ngIf="!!product" [product]="product"></eb-product-item>
 				</ng-container>
 			</div>

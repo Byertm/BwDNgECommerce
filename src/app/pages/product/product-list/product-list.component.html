@@ -1,13 +1,20 @@
-<header class="section-heading d-flex justify-content-between align-items-center">
-	<h4 class="section-title text-muted">1 - {{ limit }} Adet Ürün Gösteriliyor</h4>
-
-	<div class="filter-container d-flex align-items-center">
-		<input [(ngModel)]="searchModel" type="search" class="form-control" />
+<div class="filter-header">
+	<div class="filter-header-section">
+		<span>Kategori:</span>
+		<select [(ngModel)]="categoryModel" class="form-select">
+			<option value="">Hepsi</option>
+			<option *ngFor="let cat of productCategories; let i = index;" [attr.data-index]="i" [value]="cat">{{ cat }}</option>
+		</select>
 	</div>
 
-	<div class="filter-container d-flex align-items-center">
-		<p>Sıralama:</p>
-		<select class="form-select" [(ngModel)]="filterModel">
+	<div class="filter-header-section">
+		<span>Arama:</span>
+		<input [(ngModel)]="searchModel" placeholder="Ürün adı yazın." type="search" class="form-control" />
+	</div>
+
+	<div class="filter-header-section">
+		<span>Sıralama:</span>
+		<select [(ngModel)]="filterModel" class="form-select">
 			<option value="Default">Varsayılan</option>
 			<option value="Low to High">Fiyat: Ucuzdan Pahalıya</option>
 			<option value="High to Low">Fiyat: Pahalıdan Ucuza</option>
@@ -15,10 +22,12 @@
 			<option value="Z to A">Z den A</option>
 		</select>
 	</div>
-</header>
+</div>
 
 <div class="product-list">
-	<ng-container *ngFor="let product of products | productFilter: filterModel:searchModel; trackBy: identify">
+	<ng-container #productContainer *ngFor="let product of products | productFilter: filterModel:searchModel:categoryModel; trackBy: identify">
 		<eb-product-item *ngIf="!!product" [product]="product"></eb-product-item>
 	</ng-container>
 </div>
+
+<!-- <p class="d-block text-dark text-right p-1 p-md-3">{{ filteredItemsCount }} Adet Ürün Gösteriliyor</p> -->

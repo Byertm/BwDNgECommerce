@@ -13,7 +13,7 @@ const routes: Routes = [
 			{ path: 'products', component: ProductListComponent },
 			{ path: 'products/detail/:id', component: ProductDetailComponent },
 			{ path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
-			{ path: '**', redirectTo: '/app', pathMatch: 'full' }
+			{ path: '**', redirectTo: '/error', pathMatch: 'full' }
 		]
 	},
 	{ path: '**', redirectTo: '', pathMatch: 'full' } // Bulunamayan rotaları yakalayın ve ana sayfaya yönlendirin
