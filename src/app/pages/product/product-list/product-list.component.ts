@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { type IProduct } from '@models/index';
 import { ProductService } from '@services/index';
+import { type IProduct } from '@models/index';
 
 @Component({
 	selector: 'eb-product-list',
@@ -15,7 +15,7 @@ export class ProductListComponent implements OnInit {
 
 	constructor(private productService: ProductService) {}
 
-	identify(index: number, item: IProduct) {
+	identify(_index: number, item: IProduct) {
 		return item.id;
 	}
 

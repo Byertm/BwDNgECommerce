@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PrimeToastService } from '@services/plugins';
 import { ProductService } from '@services/index';
 import { Product, type IProduct } from '@models/index';
-import { PrimeToastService } from '@services/plugins';
 
 @Component({
 	selector: 'eb-product-detail',
@@ -31,7 +31,7 @@ export class ProductDetailComponent implements OnInit {
 		private primeToastService: PrimeToastService
 	) {}
 
-	identify(index: number, item: IProduct) {
+	identify(_index: number, item: IProduct) {
 		return item.id;
 	}
 
