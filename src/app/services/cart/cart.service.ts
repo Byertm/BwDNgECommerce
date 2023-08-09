@@ -1,119 +1,80 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-
-import { LocalStorageUnionKeys } from '@services/plugins/localStorage.service';
 import { LocalStorageService } from '@services/plugins';
+import { LocalStorageUnionKeys } from '@services/plugins/localStorage.service';
+// import { Cart, type ICart, Product, type IProduct } from '@models/index';
+import { BehaviorSubject } from 'rxjs';
 
-import { ConfirmationService } from 'primeng/api';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { Cart, type ICart, Product, type IProduct } from '@models/index';
+export class Cart {
+	items?: CartItem[];
+}
 
-@Injectable()
-export class BasketService {
-	private cartSubject = new BehaviorSubject<ICart>(new Cart());
-	private cart = this.cartSubject.asObservable();
+export class CartItem {
+	product?: any;
+	quantity?: number;
+}
 
-	private quantitySubject = new BehaviorSubject(0);
-	private quantity = this.quantitySubject.asObservable();
+export class CartItemDetailed {
+	product?: any;
+	quantity?: number;
+}
 
-	private subTotalSubject = new BehaviorSubject(0);
-	private subTotal = this.subTotalSubject.asObservable();
+@Injectable({ providedIn: 'root' })
+export class CartService {
+	cart$: BehaviorSubject<Cart> = new BehaviorSubject(this.getCart());
 
 	private cartKeyFromLocalStorage: LocalStorageUnionKeys = 'cart';
 
-	constructor(private confirmationService: ConfirmationService, private localStorageService: LocalStorageService) {
-		this.initialize();
-	}
+	constructor(private localStorageService: LocalStorageService) {}
 
-	initialize() {
-		const localCart = this.localStorageService.get(this.cartKeyFromLocalStorage);
-		if (localCart) {
-			let currentCart = this.cartSubject.getValue();
-			currentCart = JSON.parse(this.localStorageService.get(this.cartKeyFromLocalStorage) || '');
-
-			this.cartSubject.next(currentCart);
-
-			const currentCartQuantity = currentCart.products.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0);
-			// const currentCartSubTotal = currentCart.products.reduce((previousValue, currentValue) => previousValue + parseFloat(currentValue.price) * 1, 0);
-
-			this.quantitySubject.next(currentCartQuantity);
-			// this.subTotalSubject.next(currentCartSubTotal);
+	initCartLocalStorage() {
+		const cart: Cart = this.getCart();
+		if (!cart) {
+			const intialCart = { items: [] };
+			const intialCartJson = JSON.stringify(intialCart);
+			this.localStorageService.set({ key: this.cartKeyFromLocalStorage, value: intialCartJson });
 		}
 	}
 
-	getCart(): Observable<ICart> {
-		this.initialize();
-		return this.cart;
+	emptyCart() {
+		const intialCart = { items: [] };
+		const intialCartJson = JSON.stringify(intialCart);
+		this.localStorageService.set({ key: this.cartKeyFromLocalStorage, value: intialCartJson });
+		this.cart$.next(intialCart);
 	}
 
-	getCartDataFromLocalStorage(): ICart {
-		let cartJson = this.localStorageService.get(this.cartKeyFromLocalStorage);
-
-		let cart: Cart = JSON.parse(cartJson!);
-
+	getCart(): Cart {
+		const cart: Cart = this.localStorageService.getWithParse(this.cartKeyFromLocalStorage);
 		return cart;
 	}
 
-	getSubTotalValue() {
-		return this.subTotalSubject.getValue();
+	setCartItem(cartItem: CartItem, updateCartItem?: boolean): Cart {
+		const cart = this.getCart();
+		const cartItemExist = cart.items?.find((item) => item.product.id === cartItem.product.id);
+		if (cartItemExist) {
+			cart.items?.map((item) => {
+				if (item.product.id === cartItem.product.id) {
+					if (updateCartItem) item.quantity = cartItem.quantity;
+					else item.quantity = item.quantity! + cartItem.quantity!;
+					// return item;
+				}
+			});
+		} else cart.items?.push(cartItem);
+
+		const cartJson = JSON.stringify(cart);
+		this.localStorageService.set({ key: this.cartKeyFromLocalStorage, value: cartJson });
+		this.cart$.next(cart);
+		return cart;
 	}
 
-	getQuantity(): Observable<number> {
-		return this.quantity;
-	}
+	deleteCartItem(productId: string) {
+		const cart = this.getCart();
+		const newCart = cart.items?.filter((item) => item.product.id !== productId);
 
-	getSubTotal(): Observable<number> {
-		return this.subTotal;
-	}
+		cart.items = newCart;
 
-	deleteItem(product: IProduct) {
-		const cart = this.cartSubject.getValue();
-		let deletedProductIndex = cart.products.findIndex((x) => x.productId === product.id);
+		const cartJsonString = JSON.stringify(cart);
+		this.localStorageService.set({ key: this.cartKeyFromLocalStorage, value: cartJsonString });
 
-		if (deletedProductIndex >= 0) {
-			cart.products.splice(deletedProductIndex, 1);
-
-			if (cart.products.length === 0) this.emptyBag();
-			else this.buildCart(cart);
-		}
-	}
-
-	deleteItemConfirm(product: Product) {
-		const confirmationOptions: object = {
-			header: 'Ürün Silme Onayı',
-			message: 'Bu ürün kaydını silmek istiyor musunuz?',
-			icon: 'pi pi-info-circle',
-			accept: () => this.deleteItem(product)
-		};
-		this.confirmationService.confirm(confirmationOptions);
-	}
-
-	getCartSubject(): ICart {
-		return this.cartSubject.getValue();
-	}
-
-	emptyBag() {
-		const cart = this.cartSubject.getValue();
-		cart.id = 0;
-		cart.userId = 0;
-		cart.products = [];
-		cart.date = new Date();
-		cart.updateAt = new Date();
-		this.buildCart(cart);
-	}
-
-	buildCart(cart: ICart) {
-		const quantity = cart.products.reduce((pVal, cVal) => pVal + cVal.quantity, 0);
-		// const subTotal = cart.products.reduce((pVal, cVal) => pVal + parseFloat(cVal.price), 0);
-
-		// Sepetin ürün adeti ve toplam fiyatı 0'a eşitse işlem yapılabilir.
-		// if (cart.quantity === 0 && cart.subTotal === 0) { }
-
-		this.localStorageService.set({ key: 'cart', value: JSON.stringify(cart) });
-
-		this.quantitySubject.next(quantity);
-		// this.subTotalSubject.next(subTotal);
-		this.cartSubject.next(cart);
-		// this.localStorageService.set({ key: 'Cart', value: JSON.stringify(cart) });
+		this.cart$.next(cart);
 	}
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from '@app/app.component';
 import { CartComponent, ProductListComponent, ProductDetailComponent } from '@pages/index';
+import { AuthGuard } from '@services/index';
 
 const routes: Routes = [
 	{
@@ -9,12 +10,9 @@ const routes: Routes = [
 		component: AppComponent,
 		children: [
 			{ path: '', redirectTo: 'products', pathMatch: 'full' },
-			{
-				path: 'products',
-				component: ProductListComponent,
-				children: [{ path: 'detail/:id', component: ProductDetailComponent }]
-			},
-			{ path: 'cart', component: CartComponent },
+			{ path: 'products', component: ProductListComponent },
+			{ path: 'products/detail/:id', component: ProductDetailComponent },
+			{ path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
 			{ path: '**', redirectTo: '/app', pathMatch: 'full' }
 		]
 	},

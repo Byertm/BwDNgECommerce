@@ -1,1 +1,105 @@
-<p>product-detail works!</p>
+<section class="bg-warning padding-y-sm rounded">
+	<div class="container">
+		<ol class="breadcrumb ondark mb-0">
+			<li class="breadcrumb-item">
+				<a routerLink="/app">Home</a>
+			</li>
+			<li class="breadcrumb-item">
+				<a routerLink="/app/products">Product</a>
+			</li>
+			<li aria-current="page" class="breadcrumb-item active">{{ productTitle }}</li>
+		</ol>
+	</div>
+</section>
+
+<section class="py-5">
+	<div class="container">
+		<div class="row">
+			<aside class="col-lg-4">
+				<figure *ngIf="product.image" (mousemove)="imageZoom($event)" class="zoom-image" style="background-image: url({{product.image}});" [style.backgroundPosition]="backgroundPos">
+					<img class="rounded" [src]="product.image" alt="clothes" onerror="this.onerror = null;this.src='assets/images/ImageNotFound.png'; imgNotFounded=true" />
+				</figure>
+			</aside>
+
+			<main class="col-lg-6">
+				<article class="ps-lg-3">
+					<h4 class="title text-dark">{{ product.title }}</h4>
+
+					<div class="rating-wrap my-3">
+						<div class="d-inline-flex justify-content-start align-items-center gap-2">
+							<p-rating [(ngModel)]="product.rating.rate" [readonly]="true" [cancel]="false"></p-rating>
+
+							<b class="label-rating text-warning"> {{ product.rating.rate }}</b>
+
+							<i class="dot"></i>
+
+							<span class="label-rating text-muted"> <i class="fa fa-shopping-basket"></i> {{ product.rating.count }} kişi oy verdi </span>
+
+							<i class="dot"></i>
+
+							<span class="label-rating text-success">Stokta var</span>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<span class="price h5">${{ product.price }}</span>
+						<span class="text-muted">/ ürün başına</span>
+					</div>
+
+					<p>{{ product.description }}</p>
+
+					<dl class="row">
+						<dt class="col-3">Kategori:</dt>
+						<dd class="col-9">{{ product.category }}</dd>
+					</dl>
+
+					<hr />
+
+					<div class="row mb-4">
+						<div *ngIf="productInCartList" class="col-md-4 col-6 mb-3">
+							<label class="form-label d-block">Quantity</label>
+							<div class="input-group input-spinner">
+								<div class="quantity-selector">
+									<button type="button" (click)="updateCartItemQuantity(quantity , product  , '-')" [disabled]="quantity === 1" class="btn btn-quantity">
+										<span>-</span>
+									</button>
+
+									<div class="quantity-number">{{ quantity }}</div>
+
+									<button type="button" (click)="updateCartItemQuantity(quantity! , product  , '+')" class="btn btn-quantity">
+										<span>+</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<a href="#" (click)="$event.preventDefault(); addProductToCart(product)" class="btn btn-warning me-2">
+						<i class="me-1 fa fa-shopping-basket"></i>
+						{{ productInCartList ? 'Added to cart' : 'Add to cart' }}
+					</a>
+
+					<!-- <a *ngIf="!isProductInWishList" href="#" (click)="$event.preventDefault(); addProductToWishList(product)" class="btn btn-light me-2">
+						<i class="fa-regular fa-heart text-danger"></i>
+						Save
+					</a> -->
+
+					<a *ngIf="isProductInWishList" href="#" (click)="$event.preventDefault(); addProductToWishList(product)" class="btn btn-light me-2"> <i class="me-1 fa fa-heart text-danger"></i> Saved </a>
+				</article>
+			</main>
+		</div>
+
+		<div class="row my-5 position-relative">
+			<div class="title text-md-center mb-2">
+				<span>en iyi eşleşme</span>
+				<h4 class="text-dark">Önerilen Ürünler</h4>
+			</div>
+
+			<div class="related-product-wrapper">
+				<ng-container *ngFor="let product of categoryProducts; trackBy:identify">
+					<eb-product-item *ngIf="!!product" [product]="product"></eb-product-item>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</section>

@@ -9,10 +9,11 @@ import { RootRoutingModule } from '@src/root-routing.module';
 import { PrimeToastModule } from '@shared/modules/primeng-toast.module';
 
 import { RootComponent } from '@src/root.component';
+import { ErrorPageComponent } from '@pages/index';
 
 @NgModule({
 	imports: [CommonModule, BrowserModule, BrowserAnimationsModule, HttpClientModule, HttpClientJsonpModule, PrimeToastModule, RootRoutingModule],
-	declarations: [RootComponent],
+	declarations: [RootComponent, ErrorPageComponent],
 	providers: [],
 	bootstrap: [RootComponent]
 })

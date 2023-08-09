@@ -9,6 +9,9 @@ import { ProductService } from '@services/index';
 })
 export class ProductListComponent implements OnInit {
 	products: IProduct[] = [];
+	filterModel: string = 'Default';
+	searchModel: string = '';
+	limit: number = 20;
 
 	constructor(private productService: ProductService) {}
 

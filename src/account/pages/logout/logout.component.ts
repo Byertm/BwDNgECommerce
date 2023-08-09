@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@services/index';
 import { PrimeToastService } from '@services/plugins';
-import { delay, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 @Component({
 	selector: 'eb-auth-logout',
@@ -10,20 +9,16 @@ import { of } from 'rxjs';
 	styleUrls: ['./logout.component.scss']
 })
 export class LogoutComponent implements OnInit {
-	constructor(private router: Router, private primeToastService: PrimeToastService) {}
+	constructor(private router: Router, private authenticationService: AuthService, private primeToastService: PrimeToastService) {}
 
 	logout() {
-		const observablePattern = of(true)
-			.pipe(
-				delay(1000),
-				tap(() => {
-					console.log('Çıkış yapılıyor.');
-					this.primeToastService.success({ summary: 'Çıkış yapma işlemi başarıyla simule edildi. Yönlendiriliyorsunuz!', position: 'bottom-left' });
-				})
-			)
-			.subscribe(() => {
-				this.router.navigateByUrl('/');
-			});
+		console.log({ isLogged: this.authenticationService.getLogged() });
+
+		if (this.authenticationService.getLogged()) {
+			this.authenticationService.logout();
+			this.router.navigateByUrl('/auth');
+			this.primeToastService.success({ summary: 'Çıkış yapma işlemi başarıyla simule edildi. Yönlendiriliyorsunuz!', position: 'bottom-left' });
+		} else this.router.navigateByUrl('/auth');
 	}
 
 	ngOnInit() {

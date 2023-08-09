@@ -45,14 +45,14 @@ export class ProductService extends BaseService {
 		return this.getData('products', {});
 	}
 
-	getProductsWithCategory(): Observable<Array<IProduct>> {
+	getProductsWithCategory(pCategoryId: number | string): Observable<Array<IProduct>> {
 		// return this.products;
-		return this.getData('products/categories', {});
+		return this.getData(`products/category/${pCategoryId}`, {});
 	}
 
-	getAllProductCategories(pCategoryId: number | string): Observable<Array<string>> {
+	getAllProductCategories(): Observable<Array<string>> {
 		// return this.allProductCategories;
-		return this.getData(`products/category/${pCategoryId}`, {});
+		return this.getData(`products/categories`, {});
 	}
 
 	addProduct() {

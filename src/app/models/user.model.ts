@@ -29,6 +29,10 @@ export interface IUser extends IBaseModel {
 	__v: number;
 }
 
+export type UserInput = Pick<IUser, 'username' | 'password'>;
+export type UserInputEmail = Pick<IUser, 'email' | 'password'>;
+export type UserOutput = Omit<IUser, '__v' | 'password'>;
+
 export class User implements IUser {
 	id: number = 0;
 	email: string = '';
