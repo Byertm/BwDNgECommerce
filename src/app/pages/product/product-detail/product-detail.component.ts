@@ -13,11 +13,11 @@ export class ProductDetailComponent implements OnInit {
 	backgroundPos: string = 'center center';
 
 	product: IProduct = new Product();
-	productId!: number;
+	productId: number = 0;
 	category: string = '';
 	productTitle: string = '';
 	imgNotFounded: boolean = false;
-	quantity!: number;
+	quantity: number = 0;
 	loremText: string = `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, quos aspernatur eum dolorr eprehenderit eos et libero debitis itaque voluptatem! Laudantium modi sequi, id numquam liberosed quaerat. Eligendi, ipsum!`;
 	categoryRelatedProducts: IProduct[] = [];
 	isProductInWishList: boolean = false;
@@ -57,13 +57,13 @@ export class ProductDetailComponent implements OnInit {
 	getProduct() {
 		this.productService.getProduct(this.productId).subscribe((data) => {
 			this.product = data;
-			const substringLength: number = 100;
+			const substringLength: number = 60;
 			this.productTitle = this.product.title.length > substringLength ? `${this.product.title.substring(0, substringLength)}...` : this.product.title;
 			this.category = data.category;
 			this.getProductsByCategory(this.category);
 			// this.productInCartList = this.checkProductInCartList(data);
 			// this.isProductInWishList = this.productInWishList(data);
-			// if (data.images.length == 1) this.imgNotFounded = true;
+			// if (data.images.length === 1) this.imgNotFounded = true;
 		});
 	}
 
@@ -96,8 +96,10 @@ export class ProductDetailComponent implements OnInit {
 
 	ngOnInit(): void {
 		this._route.params.subscribe((params) => {
-			this.productId = params['id'];
+			this.productId = parseInt(params['id'], 10);
+
 			this.getProduct();
+
 			// this.getCartList();
 		});
 	}

@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { BaseService } from '@services/common/base.service';
 
-import { LocalStorageUnionKeys } from '@services/plugins/localStorage.service';
-// import { LocalStorageService } from '@services/plugins';
 import { type IUser, User } from '@models/user.model';
 
-// import { ConfirmationService } from 'primeng/api';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -18,90 +14,86 @@ export class UserService extends BaseService {
 	private usersSubject = new BehaviorSubject<Array<IUser>>([] as IUser[]);
 	private users = this.usersSubject.asObservable();
 
-	private allUserCategoriesSubject = new BehaviorSubject<Array<string>>([] as string[]);
-	private allUserCategories = this.allUserCategoriesSubject.asObservable();
-
-	private userKeyFromLocalStorage: LocalStorageUnionKeys = 'authData';
-
-	constructor(public override http: HttpClient) {
-		super(http);
-	}
-	// constructor(public http: HttpClient, public toast: ToastService, private auth: AuthService) { super(http, toast); }
-	// private confirmationService: ConfirmationService, private localStorageService: LocalStorageService
+	// private userKeyFromLocalStorage: LocalStorageUnionKeys = 'user';
 
 	getUser(userId: number | string): Observable<IUser> {
-		// return this.user;
-		return this.getData(`users/${userId}`, {});
+		if (this.userSubject.getValue()?.id <= 0 || this.userSubject.getValue()?.id !== userId)
+			this.getData(`users/${userId}`, {}).subscribe((product) => {
+				this.userSubject.next(product);
+			});
+
+		return this.user;
 	}
 
-	getAllUsers(): Observable<Array<IUser>> {
-		// return this.users;
-		// return this.http.get<Array<IUser>>('users');
-		return this.getData('users', {});
+	getAllUsers(pLimit: number = 20, pSort: 'asc' | 'desc' = 'desc'): Observable<Array<IUser>> {
+		if (this.usersSubject.getValue().length <= 0)
+			this.getData(`users?limit=${pLimit}&sort=${pSort}`, {}).subscribe((users) => {
+				this.usersSubject.next(users);
+			});
+
+		return this.users;
 	}
 
-	getUsersWithSort(): Observable<Array<IUser>> {
-		// return this.users;
-		return this.getData('users', {});
+	getUsersWithSort(pSort: 'asc' | 'desc' = 'desc'): Observable<Array<IUser>> {
+		if (this.usersSubject.getValue().length <= 0)
+			this.getData(`users?sort=${pSort}`, {}).subscribe((users) => {
+				this.usersSubject.next(users);
+			});
+
+		return this.users;
 	}
 
-	getUsersWithCategory(pCategoryId: number | string): Observable<Array<IUser>> {
-		// return this.users;
-		return this.getData(`users/category/${pCategoryId}`, {});
+	addUser(pUser: IUser) {
+		const postModel = JSON.stringify({
+			email: pUser.email,
+			username: pUser.username,
+			password: pUser.password,
+			description: pUser.description,
+			name: pUser.name,
+			address: pUser.address,
+			phone: pUser.phone
+		});
+
+		this.postData(`users`, postModel).subscribe((newUser: IUser) => {
+			this.usersSubject.next([...this.usersSubject.getValue(), newUser] as IUser[]);
+		});
 	}
 
-	getAllUserCategories(): Observable<Array<string>> {
-		// return this.allUserCategories;
-		return this.getData(`users/categories`, {});
+	updateUser(pUser: IUser, pUpdateType: 'put' | 'patch' = 'patch') {
+		if (pUpdateType === 'patch') {
+			const patchModel = JSON.stringify({
+				email: pUser.email,
+				username: pUser.username,
+				password: pUser.password,
+				description: pUser.description,
+				name: pUser.name,
+				address: pUser.address,
+				phone: pUser.phone
+			});
+
+			this.patchData(`users/${pUser.id}`, patchModel).subscribe((updatedUser: IUser) => {
+				this.usersSubject.next([...this.usersSubject.getValue().filter((user) => user.id !== pUser.id), updatedUser] as IUser[]);
+			});
+		} else {
+			const putModel = JSON.stringify({
+				email: pUser.email,
+				username: pUser.username,
+				password: pUser.password,
+				description: pUser.description,
+				name: pUser.name,
+				address: pUser.address,
+				phone: pUser.phone
+			});
+
+			this.putData(`users/${pUser.id}`, putModel).subscribe((updatedUser: IUser) => {
+				this.usersSubject.next([...this.usersSubject.getValue().filter((user) => user.id !== pUser.id), updatedUser] as IUser[]);
+			});
+		}
 	}
 
-	addUser() {
-		fetch('https://fakestoreapi.com/users', {
-			method: 'POST',
-			body: JSON.stringify({
-				title: 'test user',
-				price: 13.5,
-				description: 'lorem ipsum set',
-				image: 'https://i.pravatar.cc',
-				category: 'electronic'
-			})
-		})
-			.then((res) => res.json())
-			.then((json) => console.log(json));
-	}
-
-	updateUser() {
-		fetch('https://fakestoreapi.com/users/7', {
-			method: 'PUT',
-			body: JSON.stringify({
-				title: 'test user',
-				price: 13.5,
-				description: 'lorem ipsum set',
-				image: 'https://i.pravatar.cc',
-				category: 'electronic'
-			})
-		})
-			.then((res) => res.json())
-			.then((json) => console.log(json));
-		fetch('https://fakestoreapi.com/users/7', {
-			method: 'PATCH',
-			body: JSON.stringify({
-				title: 'test user',
-				price: 13.5,
-				description: 'lorem ipsum set',
-				image: 'https://i.pravatar.cc',
-				category: 'electronic'
-			})
-		})
-			.then((res) => res.json())
-			.then((json) => console.log(json));
-	}
-
-	deleteUser() {
-		fetch('https://fakestoreapi.com/users/6', {
-			method: 'DELETE'
-		})
-			.then((res) => res.json())
-			.then((json) => console.log(json));
+	deleteUser(pUserId: number | string) {
+		this.deleteData(`users/${pUserId}`, {}).subscribe((result: boolean) => {
+			if (result) this.usersSubject.next([...this.usersSubject.getValue().filter((user) => user.id !== pUserId)] as IUser[]);
+		});
 	}
 }

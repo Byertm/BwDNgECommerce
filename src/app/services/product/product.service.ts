@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { BaseService } from '@services/common/base.service';
 
-import { LocalStorageUnionKeys } from '@services/plugins/localStorage.service';
-// import { LocalStorageService } from '@services/plugins';
 import { type IProduct, Product } from '@models/product.model';
 
-// import { ConfirmationService } from 'primeng/api';
 import { Observable, BehaviorSubject } from 'rxjs';
 
-@Injectable()
+const placeholderImageAddress: string = 'https://i.pravatar.cc/';
+
+@Injectable({ providedIn: 'root' })
 export class ProductService extends BaseService {
 	private productSubject = new BehaviorSubject<IProduct>(new Product());
 	private product = this.productSubject.asObservable();
@@ -18,90 +16,104 @@ export class ProductService extends BaseService {
 	private productsSubject = new BehaviorSubject<Array<IProduct>>([] as IProduct[]);
 	private products = this.productsSubject.asObservable();
 
+	private productsWithCategorySubject = new BehaviorSubject<Array<IProduct>>([] as IProduct[]);
+	private productsWithCategory = this.productsWithCategorySubject.asObservable();
+
 	private allProductCategoriesSubject = new BehaviorSubject<Array<string>>([] as string[]);
 	private allProductCategories = this.allProductCategoriesSubject.asObservable();
 
-	private productKeyFromLocalStorage: LocalStorageUnionKeys = 'product';
-
-	constructor(public override http: HttpClient) {
-		super(http);
-	}
-	// constructor(public http: HttpClient, public toast: ToastService, private auth: AuthService) { super(http, toast); }
-	// private confirmationService: ConfirmationService, private localStorageService: LocalStorageService
+	// private productKeyFromLocalStorage: LocalStorageUnionKeys = 'product';
 
 	getProduct(productId: number | string): Observable<IProduct> {
-		// return this.product;
-		return this.getData(`products/${productId}`, {});
+		if (this.productSubject.getValue()?.id <= 0 || this.productSubject.getValue()?.id !== productId)
+			this.getData(`products/${productId}`, {}).subscribe((product) => {
+				this.productSubject.next(product);
+			});
+
+		return this.product;
 	}
 
-	getAllProducts(): Observable<Array<IProduct>> {
-		// return this.products;
-		// return this.http.get<Array<IProduct>>('products');
-		return this.getData('products', {});
+	getAllProducts(pLimit: number = 20, pSort: 'asc' | 'desc' = 'desc'): Observable<Array<IProduct>> {
+		if (this.productsSubject.getValue().length <= 0)
+			this.getData(`products?limit=${pLimit}&sort=${pSort}`, {}).subscribe((products) => {
+				this.productsSubject.next(products);
+			});
+
+		return this.products;
 	}
 
-	getProductsWithSort(): Observable<Array<IProduct>> {
-		// return this.products;
-		return this.getData('products', {});
+	getProductsWithSort(pSort: 'asc' | 'desc' = 'desc'): Observable<Array<IProduct>> {
+		if (this.productsSubject.getValue().length <= 0)
+			this.getData(`products?sort=${pSort}`, {}).subscribe((products) => {
+				this.productsSubject.next(products);
+			});
+
+		return this.products;
 	}
 
-	getProductsWithCategory(pCategoryId: number | string): Observable<Array<IProduct>> {
-		// return this.products;
-		return this.getData(`products/category/${pCategoryId}`, {});
+	getProductsWithCategory(pCategoryName: string): Observable<Array<IProduct>> {
+		if (this.productsWithCategorySubject.getValue().length <= 0 || this.productsWithCategorySubject.getValue()?.[0]?.category !== pCategoryName || !!pCategoryName)
+			this.getData(`products/category/${pCategoryName}`, {}).subscribe((products) => {
+				this.productsWithCategorySubject.next(products);
+			});
+
+		return this.productsWithCategory;
 	}
 
 	getAllProductCategories(): Observable<Array<string>> {
-		// return this.allProductCategories;
-		return this.getData(`products/categories`, {});
+		if (this.allProductCategoriesSubject.getValue().length <= 0)
+			this.getData(`products/categories`, {}).subscribe((productCategories) => {
+				this.allProductCategoriesSubject.next(productCategories);
+			});
+
+		return this.allProductCategories;
 	}
 
-	addProduct() {
-		fetch('https://fakestoreapi.com/products', {
-			method: 'POST',
-			body: JSON.stringify({
-				title: 'test product',
-				price: 13.5,
-				description: 'lorem ipsum set',
-				image: 'https://i.pravatar.cc',
-				category: 'electronic'
-			})
-		})
-			.then((res) => res.json())
-			.then((json) => console.log(json));
+	addProduct(pProduct: IProduct) {
+		const postModel = JSON.stringify({
+			title: pProduct.title,
+			price: pProduct.price,
+			description: pProduct.description,
+			image: placeholderImageAddress,
+			category: pProduct.category
+		});
+
+		this.postData(`products`, postModel).subscribe((newProduct: IProduct) => {
+			this.productsSubject.next([...this.productsSubject.getValue(), newProduct] as IProduct[]);
+		});
 	}
 
-	updateProduct() {
-		fetch('https://fakestoreapi.com/products/7', {
-			method: 'PUT',
-			body: JSON.stringify({
-				title: 'test product',
-				price: 13.5,
-				description: 'lorem ipsum set',
-				image: 'https://i.pravatar.cc',
-				category: 'electronic'
-			})
-		})
-			.then((res) => res.json())
-			.then((json) => console.log(json));
-		fetch('https://fakestoreapi.com/products/7', {
-			method: 'PATCH',
-			body: JSON.stringify({
-				title: 'test product',
-				price: 13.5,
-				description: 'lorem ipsum set',
-				image: 'https://i.pravatar.cc',
-				category: 'electronic'
-			})
-		})
-			.then((res) => res.json())
-			.then((json) => console.log(json));
+	updateProduct(pProduct: IProduct, pUpdateType: 'put' | 'patch' = 'patch') {
+		if (pUpdateType === 'patch') {
+			const patchModel = JSON.stringify({
+				title: pProduct.title,
+				price: pProduct.price,
+				description: pProduct.description,
+				image: placeholderImageAddress,
+				category: pProduct.category
+			});
+
+			this.patchData(`products/${pProduct.id}`, patchModel).subscribe((updatedProduct: IProduct) => {
+				this.productsSubject.next([...this.productsSubject.getValue().filter((product) => product.id !== pProduct.id), updatedProduct] as IProduct[]);
+			});
+		} else {
+			const putModel = JSON.stringify({
+				title: pProduct.title,
+				price: pProduct.price,
+				description: pProduct.description,
+				image: placeholderImageAddress,
+				category: pProduct.category
+			});
+
+			this.putData(`products/${pProduct.id}`, putModel).subscribe((updatedProduct: IProduct) => {
+				this.productsSubject.next([...this.productsSubject.getValue().filter((product) => product.id !== pProduct.id), updatedProduct] as IProduct[]);
+			});
+		}
 	}
 
-	deleteProduct() {
-		fetch('https://fakestoreapi.com/products/6', {
-			method: 'DELETE'
-		})
-			.then((res) => res.json())
-			.then((json) => console.log(json));
+	deleteProduct(pProductId: number | string) {
+		this.deleteData(`products/${pProductId}`, {}).subscribe((result: boolean) => {
+			if (result) this.productsSubject.next([...this.productsSubject.getValue().filter((product) => product.id !== pProductId)] as IProduct[]);
+		});
 	}
 }
