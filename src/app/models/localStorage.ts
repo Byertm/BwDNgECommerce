@@ -1,10 +1,11 @@
 enum LocalStorageKeys {
-	AuthData = "authData",
-	ToastList = "toastList",
-	Product = "product",
-	Token = "token",
-	Cart = "cart"
-};
+	AuthData = 'authData',
+	ToastList = 'toastList',
+	WishList = 'wishlist',
+	Product = 'product',
+	Token = 'token',
+	Cart = 'cart'
+}
 
 export { LocalStorageKeys };
 

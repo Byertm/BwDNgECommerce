@@ -14,7 +14,7 @@ export class UserService extends BaseService {
 	private usersSubject = new BehaviorSubject<Array<IUser>>([] as IUser[]);
 	private users = this.usersSubject.asObservable();
 
-	// private userKeyFromLocalStorage: LocalStorageUnionKeys = 'user';
+	// private userKeyFromLS: LocalStorageUnionKeys = 'user';
 
 	getUser(userId: number | string): Observable<IUser> {
 		if (this.userSubject.getValue()?.id <= 0 || this.userSubject.getValue()?.id !== userId)

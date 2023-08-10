@@ -22,7 +22,7 @@ export class ProductService extends BaseService {
 	private allProductCategoriesSubject = new BehaviorSubject<Array<string>>([] as string[]);
 	private allProductCategories = this.allProductCategoriesSubject.asObservable();
 
-	// private productKeyFromLocalStorage: LocalStorageUnionKeys = 'product';
+	// private productKeyFromLS: LocalStorageUnionKeys = 'product';
 
 	getProduct(productId: number | string): Observable<IProduct> {
 		if (this.productSubject.getValue()?.id <= 0 || this.productSubject.getValue()?.id !== productId)

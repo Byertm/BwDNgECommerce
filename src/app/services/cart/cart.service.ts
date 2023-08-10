@@ -1,58 +1,59 @@
 import { Injectable } from '@angular/core';
+import { type IProduct } from '@models/product.model';
 import { LocalStorageService } from '@services/plugins';
 import { LocalStorageUnionKeys } from '@services/plugins/localStorage.service';
 // import { Cart, type ICart, Product, type IProduct } from '@models/index';
 import { BehaviorSubject } from 'rxjs';
 
-export class Cart {
-	items?: CartItem[];
+export interface ICart {
+	items?: ICartItem[];
 }
 
-export class CartItem {
-	product?: any;
+export interface ICartItem {
+	product?: IProduct;
 	quantity?: number;
 }
 
-export class CartItemDetailed {
-	product?: any;
+export interface ICartItemDetailed {
+	product?: IProduct;
 	quantity?: number;
 }
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-	cart$: BehaviorSubject<Cart> = new BehaviorSubject(this.getCart());
+	cart$: BehaviorSubject<ICart> = new BehaviorSubject(this.getCart());
 
-	private cartKeyFromLocalStorage: LocalStorageUnionKeys = 'cart';
+	private cartKeyFromLS: LocalStorageUnionKeys = 'cart';
 
 	constructor(private localStorageService: LocalStorageService) {}
 
 	initCartLocalStorage() {
-		const cart: Cart = this.getCart();
+		const cart: ICart = this.getCart();
 		if (!cart) {
 			const intialCart = { items: [] };
 			const intialCartJson = JSON.stringify(intialCart);
-			this.localStorageService.set({ key: this.cartKeyFromLocalStorage, value: intialCartJson });
+			this.localStorageService.set({ key: this.cartKeyFromLS, value: intialCartJson });
 		}
 	}
 
 	emptyCart() {
 		const intialCart = { items: [] };
 		const intialCartJson = JSON.stringify(intialCart);
-		this.localStorageService.set({ key: this.cartKeyFromLocalStorage, value: intialCartJson });
+		this.localStorageService.set({ key: this.cartKeyFromLS, value: intialCartJson });
 		this.cart$.next(intialCart);
 	}
 
-	getCart(): Cart {
-		const cart: Cart = this.localStorageService.getWithParse(this.cartKeyFromLocalStorage);
+	getCart(): ICart {
+		const cart: ICart = this.localStorageService.getWithParse(this.cartKeyFromLS);
 		return cart;
 	}
 
-	setCartItem(cartItem: CartItem, updateCartItem?: boolean): Cart {
+	setCartItem(cartItem: ICartItem, updateCartItem?: boolean): ICart {
 		const cart = this.getCart();
-		const cartItemExist = cart.items?.find((item) => item.product.id === cartItem.product.id);
+		const cartItemExist = cart?.items?.find((item) => item.product?.id === cartItem?.product?.id);
 		if (cartItemExist) {
 			cart.items?.map((item) => {
-				if (item.product.id === cartItem.product.id) {
+				if (item.product?.id === cartItem.product?.id) {
 					if (updateCartItem) item.quantity = cartItem.quantity;
 					else item.quantity = item.quantity! + cartItem.quantity!;
 					// return item;
@@ -61,19 +62,19 @@ export class CartService {
 		} else cart.items?.push(cartItem);
 
 		const cartJson = JSON.stringify(cart);
-		this.localStorageService.set({ key: this.cartKeyFromLocalStorage, value: cartJson });
+		this.localStorageService.set({ key: this.cartKeyFromLS, value: cartJson });
 		this.cart$.next(cart);
 		return cart;
 	}
 
-	deleteCartItem(productId: string) {
+	deleteCartItem(productId: number) {
 		const cart = this.getCart();
-		const newCart = cart.items?.filter((item) => item.product.id !== productId);
+		const newCart = cart.items?.filter((item) => item.product?.id !== productId);
 
 		cart.items = newCart;
 
 		const cartJsonString = JSON.stringify(cart);
-		this.localStorageService.set({ key: this.cartKeyFromLocalStorage, value: cartJsonString });
+		this.localStorageService.set({ key: this.cartKeyFromLS, value: cartJsonString });
 
 		this.cart$.next(cart);
 	}

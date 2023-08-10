@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { ProductService } from '@services/index';
 import { type IProduct } from '@models/index';
+import { WishlistService, type IWishItem } from '@services/cart/wishlist.service';
 
 @Component({
 	selector: 'eb-product-list',
@@ -10,6 +11,7 @@ import { type IProduct } from '@models/index';
 export class ProductListComponent implements OnInit {
 	@ViewChildren('productContainer') filteredItems: IProduct[] = [];
 
+	wishList: IWishItem[] = [];
 	products: IProduct[] = [];
 	productCategories: string[] = [];
 	filterModel: string = 'Default';
@@ -21,7 +23,7 @@ export class ProductListComponent implements OnInit {
 		return this.filteredItems?.length ? this.filteredItems.length : 0;
 	}
 
-	constructor(private productService: ProductService) {}
+	constructor(private productService: ProductService, private wishlistService: WishlistService) {}
 
 	identify(_index: number, item: IProduct) {
 		return item.id;
@@ -39,7 +41,15 @@ export class ProductListComponent implements OnInit {
 		});
 	}
 
-	ngOnInit() {
+	getWishList() {
+		this.wishlistService.wishList$.subscribe((cart) => {
+			this.wishList = cart?.items ? cart.items : [];
+		});
+	}
+
+	ngOnInit(): void {
+		this.getWishList();
+
 		this.getAllProductCategories();
 
 		this.getAllProducts();

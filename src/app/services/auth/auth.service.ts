@@ -17,8 +17,8 @@ export class AuthService implements OnDestroy {
 	public isLogged = this.isLoggedSubject.asObservable();
 	private allUsersSubject = new BehaviorSubject<Array<UserOutput>>([]);
 	public allUsers = this.allUsersSubject.asObservable();
-	private authDataKeyFromLocalStorage: LocalStorageUnionKeys = 'authData';
-	private tokenKeyFromLocalStorage: LocalStorageUnionKeys = 'token';
+	private authDataKeyFromLS: LocalStorageUnionKeys = 'authData';
+	private tokenKeyFromLS: LocalStorageUnionKeys = 'token';
 	private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 	//#endregion
 
@@ -68,7 +68,7 @@ export class AuthService implements OnDestroy {
 
 	//#region  Private Methods
 	isTokenValid() {
-		const token = JSON.parse(this.localStorageService.get(this.tokenKeyFromLocalStorage) || 'null');
+		const token = JSON.parse(this.localStorageService.get(this.tokenKeyFromLS) || 'null');
 
 		if (!token) return false;
 
@@ -85,8 +85,8 @@ export class AuthService implements OnDestroy {
 
 	getAuthFromLocalStorage(): any {
 		try {
-			const token = JSON.parse(this.localStorageService.get(this.tokenKeyFromLocalStorage) || 'null');
-			const authData = JSON.parse(this.localStorageService.get(this.authDataKeyFromLocalStorage) || '{}');
+			const token = JSON.parse(this.localStorageService.get(this.tokenKeyFromLS) || 'null');
+			const authData = JSON.parse(this.localStorageService.get(this.authDataKeyFromLS) || '{}');
 			this.buildAuth(authData);
 			return authData;
 		} catch (error) {
@@ -145,8 +145,8 @@ export class AuthService implements OnDestroy {
 	}
 
 	logout() {
-		this.localStorageService.remove(this.tokenKeyFromLocalStorage);
-		this.localStorageService.remove(this.authDataKeyFromLocalStorage);
+		this.localStorageService.remove(this.tokenKeyFromLS);
+		this.localStorageService.remove(this.authDataKeyFromLS);
 		this.isLoggedSubject.next(false);
 		this.isLoadingSubject.next(false);
 		this.buildAuth({});

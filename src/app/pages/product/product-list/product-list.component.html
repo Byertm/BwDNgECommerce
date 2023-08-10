@@ -26,7 +26,7 @@
 
 <div class="product-list">
 	<ng-container #productContainer *ngFor="let product of products | productFilter: filterModel:searchModel:categoryModel; trackBy: identify">
-		<eb-product-item *ngIf="!!product" [product]="product"></eb-product-item>
+		<eb-product-item *ngIf="!!product" [product]="product" [wishList]="wishList"></eb-product-item>
 	</ng-container>
 </div>
 

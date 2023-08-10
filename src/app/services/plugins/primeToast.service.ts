@@ -39,26 +39,26 @@ export class PrimeToastService {
 	private toastSubject = new BehaviorSubject<IToastModel>({} as IToastModel);
 	private toast = this.toastSubject.asObservable();
 
-	private toastListKeyFromLocalStorage: LocalStorageUnionKeys = 'toastList';
+	private toastListKeyFromLS: LocalStorageUnionKeys = 'toastList';
 
 	constructor(private messageService: MessageService, private localStorageService: LocalStorageService) {}
 
 	//#region Local Storage Process
 	isToastLS(): boolean {
-		let localToast = this.localStorageService.get(this.toastListKeyFromLocalStorage);
+		let localToast = this.localStorageService.get(this.toastListKeyFromLS);
 		return !!localToast;
 	}
 
 	getToastLS(): string {
-		return this.localStorageService.get(this.toastListKeyFromLocalStorage) || '';
+		return this.localStorageService.get(this.toastListKeyFromLS) || '';
 	}
 
 	setToastLS(pValue: string): void {
-		this.localStorageService.set({ key: this.toastListKeyFromLocalStorage, value: pValue });
+		this.localStorageService.set({ key: this.toastListKeyFromLS, value: pValue });
 	}
 
 	removeToastLS(): void {
-		if (this.isToastLS()) this.localStorageService.remove(this.toastListKeyFromLocalStorage);
+		if (this.isToastLS()) this.localStorageService.remove(this.toastListKeyFromLS);
 	}
 	//#endregion
 
@@ -69,9 +69,9 @@ export class PrimeToastService {
 
 	getLSToast(): Observable<IToastModel> {
 		let currentToast = this.toastSubject.getValue();
-		let localToast = this.localStorageService.get(this.toastListKeyFromLocalStorage);
+		let localToast = this.localStorageService.get(this.toastListKeyFromLS);
 		if (localToast) {
-			currentToast = JSON.parse(this.localStorageService.get(this.toastListKeyFromLocalStorage) || '');
+			currentToast = JSON.parse(this.localStorageService.get(this.toastListKeyFromLS) || '');
 		}
 		this.toastSubject.next(currentToast);
 		return this.toast;

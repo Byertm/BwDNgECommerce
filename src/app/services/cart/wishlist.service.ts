@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { LocalStorageService } from '@services/plugins';
+import { ICart, ICartItem } from './cart.service';
 import { BehaviorSubject } from 'rxjs';
-import { Cart, CartItem } from './cart.service';
+import { LocalStorageUnionKeys } from '@services/plugins/localStorage.service';
 
 export interface IWishList {
 	items?: IWishItem[];
@@ -10,42 +12,42 @@ export interface IWishItem {
 	product?: any;
 }
 
-export const WISHLIST_KEY = 'wishlist';
-
 @Injectable({ providedIn: 'root' })
 export class WishlistService {
 	wishList$: BehaviorSubject<IWishList> = new BehaviorSubject(this.getWishlist());
 
-	constructor() {}
+	private wishlistKeyFromLS: LocalStorageUnionKeys = 'wishlist';
+
+	constructor(private localStorageService: LocalStorageService) {}
+
+	getWishlist(): IWishList {
+		const wishlistJsonString = localStorage.getItem(this.wishlistKeyFromLS);
+		const cart: ICart = JSON.parse(wishlistJsonString!);
+		return cart;
+	}
 
 	initWishlistLocalStorage() {
-		const wishProductlist: IWishList = this.getWishlist();
-		if (!wishProductlist) {
+		const wishlist: IWishList = this.getWishlist();
+		if (!wishlist) {
 			const wishListCart = { items: [] };
 			const wishListCartJson = JSON.stringify(wishListCart);
-			localStorage.setItem(WISHLIST_KEY, wishListCartJson);
+			this.localStorageService.setBasic(this.wishlistKeyFromLS, wishListCartJson);
 		}
 	}
 
 	emptyCart() {
 		const wishListCart = { items: [] };
 		const wishListCartJson = JSON.stringify(wishListCart);
-		localStorage.setItem(WISHLIST_KEY, wishListCartJson);
+		this.localStorageService.setBasic(this.wishlistKeyFromLS, wishListCartJson);
 		this.wishList$.next(wishListCart);
 	}
 
-	getWishlist(): IWishList {
-		const wishlistJsonString = localStorage.getItem(WISHLIST_KEY);
-		const cart: Cart = JSON.parse(wishlistJsonString!);
-		return cart;
-	}
-
-	setWishItem(cartItem: CartItem, updateCartItem?: boolean): Cart {
+	setWishItem(cartItem: ICartItem, updateCartItem?: boolean): ICart {
 		const wishProductList = this.getWishlist();
-		const cartItemExist = wishProductList.items?.find((item) => item.product.id === cartItem.product.id);
+		const cartItemExist = wishProductList?.items?.find((item) => item.product.id === cartItem?.product?.id);
 		if (cartItemExist) {
 			wishProductList.items?.map((item) => {
-				if (item.product.id === cartItem.product.id) {
+				if (item.product.id === cartItem?.product?.id) {
 					// if (updateCartItem) item.quantity = cartItem.quantity;
 					// else item.quantity = item.quantity! + cartItem.quantity!;
 					// return item;
@@ -54,7 +56,7 @@ export class WishlistService {
 		} else wishProductList.items?.push(cartItem);
 
 		const cartJson = JSON.stringify(wishProductList);
-		localStorage.setItem(WISHLIST_KEY, cartJson);
+		this.localStorageService.setBasic(this.wishlistKeyFromLS, cartJson);
 		this.wishList$.next(wishProductList);
 		return wishProductList;
 	}
@@ -66,7 +68,7 @@ export class WishlistService {
 		wishProductList.items = newWishList;
 
 		const wishListJsonString = JSON.stringify(wishProductList);
-		localStorage.setItem(WISHLIST_KEY, wishListJsonString);
+		this.localStorageService.setBasic(this.wishlistKeyFromLS, wishListJsonString);
 
 		this.wishList$.next(wishProductList);
 	}

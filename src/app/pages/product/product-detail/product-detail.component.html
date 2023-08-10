@@ -57,7 +57,7 @@
 
 					<div class="row mb-4">
 						<div *ngIf="productInCartList" class="col-md-4 col-6 mb-3">
-							<label class="form-label d-block">Quantity</label>
+							<label class="form-label d-block">Ürün Adedi</label>
 							<div class="input-group input-spinner">
 								<div class="quantity-selector">
 									<button type="button" (click)="updateCartItemQuantity(quantity , product  , '-')" [disabled]="quantity === 1" class="btn btn-quantity">
@@ -76,15 +76,15 @@
 
 					<a href="#" (click)="$event.preventDefault(); addProductToCart(product)" class="btn btn-warning me-2">
 						<i class="me-1 pi pi-shopping-basket"></i>
-						{{ productInCartList ? 'Added to cart' : 'Add to cart' }}
+						{{ productInCartList ? 'Sepete Eklendi' : 'Sepete Ekle' }}
 					</a>
 
-					<!-- <a *ngIf="!isProductInWishList" href="#" (click)="$event.preventDefault(); addProductToWishList(product)" class="btn btn-light me-2">
+					<a *ngIf="!isProductInWishList" href="#" (click)="$event.preventDefault(); addProductToWishList(product)" class="btn btn-light me-2">
 						<i class="pi pi-heart text-danger"></i>
-						Save
-					</a> -->
+						İstek Listesine Ekle
+					</a>
 
-					<a *ngIf="isProductInWishList" href="#" (click)="$event.preventDefault(); addProductToWishList(product)" class="btn btn-light me-2"> <i class="me-1 pi pi-heart text-danger"></i> Saved </a>
+					<a *ngIf="isProductInWishList" href="#" (click)="$event.preventDefault(); addProductToWishList(product)" class="btn btn-light me-2"> <i class="me-1 pi pi-heart text-danger"></i> İstek Listesinden Çıkar </a>
 				</article>
 			</main>
 		</div>
