@@ -10,8 +10,10 @@ import { PrimeNgSharedModule } from '@shared/modules';
 import { AuthHeaderComponent, AuthMainComponent, AuthFooterComponent } from '@account/layouts';
 import { LoginComponent } from '@account/pages';
 
+import { EBLogoComponent } from '@shared/components';
+
 @NgModule({
 	declarations: [LoginComponent, AuthHeaderComponent, AuthFooterComponent, AuthMainComponent],
-	imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, HttpClientJsonpModule, AccountRoutingModule, PrimeNgSharedModule]
+	imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, HttpClientJsonpModule, AccountRoutingModule, PrimeNgSharedModule, EBLogoComponent]
 })
 export class AccountModule {}

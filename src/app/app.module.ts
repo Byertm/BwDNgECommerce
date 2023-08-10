@@ -18,6 +18,8 @@ import { HeaderComponent, MainComponent, FooterComponent } from '@layouts/index'
 import { ProductListComponent, ProductDetailComponent, CartComponent } from '@pages/index';
 import { ProductFilterPipe } from '@helpers/index';
 
+import { EBLogoComponent } from '@shared/components';
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -30,7 +32,18 @@ import { ProductFilterPipe } from '@helpers/index';
 		ProductItemComponent,
 		ProductFilterPipe
 	],
-	imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, HttpClientJsonpModule, AppRoutingModule, PrimeNgSharedModule, ButtonModule, RatingModule],
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		HttpClientModule,
+		HttpClientJsonpModule,
+		AppRoutingModule,
+		PrimeNgSharedModule,
+		ButtonModule,
+		RatingModule,
+		EBLogoComponent
+	],
 	providers: [ProductService]
 })
 export class AppModule {}
