@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { ProductService } from '@services/index';
+import { WishlistService } from '@services/cart/index';
+import { IWishItem } from '@services/cart/wishlist.service';
 import { type IProduct } from '@models/index';
-import { WishlistService, type IWishItem } from '@services/cart/wishlist.service';
 
 @Component({
 	selector: 'eb-product-list',

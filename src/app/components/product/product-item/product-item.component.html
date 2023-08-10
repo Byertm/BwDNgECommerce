@@ -7,7 +7,7 @@
 				<!-- </figure> -->
 			</a>
 
-			<span *ngIf="(product.id) % 3 === 0" class="product-sale">Sale</span>
+			<span *ngIf="isProductSale" class="product-sale">İndirimde</span>
 
 			<button type="button" [class.is-favourite]="productInWishList(product)" (click)="addProductToWishList(product , $event)" class="btn-favourite btn-circle">
 				<i class="pi pi-heart"></i>
@@ -29,7 +29,7 @@
 			<div class="product-content__footer">
 				<div class="product-content__footer-price">
 					<h5 class="product-price">${{ product.price | number : '1.2-2' }}</h5>
-					<span *ngIf="(product.id) % 3 === 0">${{ product.price * 1.5 | number : '1.2-2' }}</span>
+					<span *ngIf="isProductSale">${{ product.price * 1.5 | number : '1.2-2' }}</span>
 				</div>
 
 				<span class="product-atc rounded-circle">

@@ -1,7 +1,6 @@
 :host {
 	display: block;
 
-	/*-- Sticky Header --*/
 	.header-sticky.is-sticky {
 		-webkit-animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
 		animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
@@ -24,6 +23,35 @@
 		to {
 			opacity: 1;
 			transform: none;
+		}
+	}
+
+	.btn-wrap {
+		position: relative;
+
+		.number {
+			position: absolute;
+			top: -0.75rem;
+			right: -0.75rem;
+			background-color: #333;
+			color: #fff;
+			font-size: 0.8rem;
+			padding: 0;
+			aspect-ratio: 1/1;
+			width: 1.2rem;
+			border-radius: 50%;
+			display: inline-flex;
+			justify-content: center;
+			align-items: center;
+			transform-origin: top right;
+			will-change: scale, transform;
+			transition: scale 150ms ease-in;
+		}
+
+		&:hover {
+			.number {
+				scale: 1.4;
+			}
 		}
 	}
 }

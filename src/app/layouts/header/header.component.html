@@ -7,20 +7,16 @@
 
 	<!-- Right -->
 	<div>
-		<!-- <a routerLink="/app" routerLinkActive="rl-active" pTooltip="Ana Sayfa" tooltipPosition="bottom" type="button" class="text-white me-4">
-			<i class="pi pi-home"></i>
-		</a> -->
-
 		<a routerLink="/app/products" routerLinkActive="rl-active" pTooltip="Ürünler" tooltipPosition="bottom" type="button" class="text-white me-4">
-			<i class="pi pi-bars"></i>
+			<i class="pi pi-home"></i>
 		</a>
 
-		<a *ngIf="isLogged && false" routerLink="/app/wislist" routerLinkActive="rl-active" pTooltip="İstek Listesi" tooltipPosition="bottom" type="button" class="text-white me-4">
+		<!-- <a *ngIf="isLogged" routerLink="/app/wislist" routerLinkActive="rl-active" pTooltip="İstek Listesi" tooltipPosition="bottom" type="button" class="text-white me-4 btn-wrap">
 			<i class="pi pi-shopping-cart"></i>
 			<span class="number">{{ wishProductCount }}</span>
-		</a>
+		</a> -->
 
-		<a *ngIf="isLogged" routerLink="/app/cart" routerLinkActive="rl-active" pTooltip="Sepet" tooltipPosition="bottom" type="button" class="text-white me-4">
+		<a *ngIf="isLogged" routerLink="/app/cart" routerLinkActive="rl-active" pTooltip="Sepet" tooltipPosition="bottom" type="button" class="text-white me-4 btn-wrap">
 			<i class="pi pi-shopping-cart"></i>
 			<span class="number">{{ cartProductCount }}</span>
 		</a>

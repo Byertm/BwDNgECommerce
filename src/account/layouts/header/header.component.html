@@ -1,30 +1,22 @@
 <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between align-items-md-center py-4 px-4 px-xl-5 bg-primary">
 	<!-- Logo -->
-	<a routerLink="/auth" class="logo-wrapper">
+	<a routerLink="/app/products" class="logo-wrapper">
 		<eb-logo [isLetterLogo]="true"></eb-logo>
 	</a>
 	<!-- Logo -->
 
 	<!-- Right -->
 	<div>
-		<a routerLink="/app" pTooltip="Ana Sayfa" tooltipPosition="bottom" type="button" class="text-white me-4">
+		<a routerLink="/app/products" pTooltip="Ana Sayfa" tooltipPosition="bottom" type="button" class="text-white me-4">
 			<i class="pi pi-home"></i>
-		</a>
-
-		<a routerLink="/app/products" routerLinkActive="rl-active" pTooltip="Ürünler" tooltipPosition="bottom" type="button" class="text-white me-4">
-			<i class="pi pi-bars"></i>
-		</a>
-
-		<a *ngIf="isLogged" routerLink="/app" pTooltip="Sepet" tooltipPosition="bottom" type="button" class="text-white me-4">
-			<i class="pi pi-shopping-cart"></i>
-		</a>
-
-		<a *ngIf="isLogged" routerLink="/auth/logout" routerLinkActive="rl-active" pTooltip="Çıkış Yap" tooltipPosition="bottom" type="button" class="text-white me-4">
-			<i class="pi pi-sign-out"></i>
 		</a>
 
 		<a *ngIf="!isLogged" routerLink="/auth/login" routerLinkActive="rl-active" pTooltip="Giriş Yap" tooltipPosition="bottom" type="button" class="text-white me-4">
 			<i class="pi pi-sign-in"></i>
+		</a>
+
+		<a *ngIf="isLogged" routerLink="/auth/logout" routerLinkActive="rl-active" pTooltip="Çıkış Yap" tooltipPosition="bottom" type="button" class="text-white me-4">
+			<i class="pi pi-sign-out"></i>
 		</a>
 	</div>
 	<!-- Right -->

@@ -15,6 +15,10 @@ export class ProductItemComponent implements OnInit {
 
 	@Input() wishList: IWishItem[] = [];
 
+	get isProductSale() {
+		return this.product ? this.product?.id % 3 === 0 : false;
+	}
+
 	constructor(private cartService: CartService, private productService: ProductService, private wishlistService: WishlistService, private primeToastService: PrimeToastService) {}
 
 	addProductToWishList(item: any, event: any) {

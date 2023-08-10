@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 //#region Modules, Service And Helper References
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 //#endregion
 
 import { PrimeToastService } from '@services/plugins';
@@ -12,7 +12,7 @@ const importAndExportModules = [ToastModule];
 
 @NgModule({
 	declarations: [ToastWrapperComponent],
-	providers: [MessageService, PrimeToastService],
+	providers: [MessageService, ConfirmationService, PrimeToastService],
 	imports: [...importAndExportModules],
 	exports: [...importAndExportModules, ToastWrapperComponent]
 })

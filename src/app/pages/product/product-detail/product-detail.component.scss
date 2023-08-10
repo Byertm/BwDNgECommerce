@@ -7,6 +7,12 @@
 		&.ondark {
 			.breadcrumb-item {
 				color: #fff;
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				line-clamp: 1;
+				-webkit-box-orient: vertical;
+				text-overflow: ellipsis;
+				overflow: hidden;
 			}
 
 			a {
@@ -26,6 +32,19 @@
 			color: #fff;
 			opacity: 0.6;
 		}
+	}
+
+	.product-sale {
+		position: absolute;
+		color: #fff;
+		font-size: 0.75em;
+		font-weight: normal;
+		line-height: 1;
+		text-transform: uppercase;
+		top: 0;
+		right: 0;
+		background-color: #fb5231;
+		padding: 0.41em 0.83em;
 	}
 
 	.rating-stars {

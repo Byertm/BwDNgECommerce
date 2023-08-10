@@ -28,6 +28,10 @@ export class ProductDetailComponent implements OnInit {
 	cartList: ICartItem[] = [];
 	wishList: IWishItem[] = [];
 
+	get isProductSale() {
+		return this.product ? this.product?.id % 3 === 0 : false;
+	}
+
 	constructor(
 		private route: ActivatedRoute,
 		private cartService: CartService,
