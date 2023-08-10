@@ -1,3 +1,29 @@
 :host {
 	display: block;
+
+	/*-- Sticky Header --*/
+	.header-sticky.is-sticky {
+		-webkit-animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
+		animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
+		-webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+		background-color: #ffffff;
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100%;
+		z-index: 999;
+	}
+
+	@keyframes fadeInDown {
+		0% {
+			opacity: 0;
+			transform: translate3d(0, -100px, 0);
+		}
+
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
 }

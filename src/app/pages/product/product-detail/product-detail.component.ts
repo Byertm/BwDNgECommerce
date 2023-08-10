@@ -70,8 +70,11 @@ export class ProductDetailComponent implements OnInit {
 			const substringLength: number = 60;
 			this.productTitle = this.product.title.length > substringLength ? `${this.product.title.substring(0, substringLength)}...` : this.product.title;
 			this.category = data.category;
+
 			this.getProductsByCategory(this.category);
+
 			this.productInCartList = this.checkProductInCartList(data);
+
 			this.isProductInWishList = this.productInWishList(data);
 			// if (data.images.length === 1) this.imgNotFounded = true;
 		});
@@ -79,19 +82,17 @@ export class ProductDetailComponent implements OnInit {
 
 	getCartList() {
 		this.cartService.cart$.subscribe((cart) => {
-			this.cartList = cart.items!;
-			if (this.product) {
-				this.productInCartList = this.checkProductInCartList(this.product);
-			}
+			this.cartList = cart?.items ? cart.items : [];
+
+			if (this.product) this.productInCartList = this.checkProductInCartList(this.product);
 		});
 	}
 
 	getWishList() {
-		this.wishlistService.wishList$.subscribe((cart) => {
-			this.wishList = cart.items!;
-			if (this.product) {
-				this.isProductInWishList = this.productInWishList(this.product);
-			}
+		this.wishlistService.wishList$.subscribe((wishlist) => {
+			this.wishList = wishlist?.items ? wishlist.items : [];
+
+			if (this.product) this.isProductInWishList = this.productInWishList(this.product);
 		});
 	}
 

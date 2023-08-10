@@ -41,13 +41,5 @@ export class ProductItemComponent implements OnInit {
 		return cartItemExist;
 	}
 
-	// getWishList() {
-	// 	this.wishlistService.wishList$.subscribe((cart) => {
-	// 		this.wishList = cart.items!;
-	// 	});
-	// }
-
-	ngOnInit(): void {
-		// this.getWishList();
-	}
+	ngOnInit(): void {}
 }

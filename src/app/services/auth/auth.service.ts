@@ -88,6 +88,7 @@ export class AuthService implements OnDestroy {
 			const token = JSON.parse(this.localStorageService.get(this.tokenKeyFromLS) || 'null');
 			const authData = JSON.parse(this.localStorageService.get(this.authDataKeyFromLS) || '{}');
 			this.buildAuth(authData);
+			if (!!token) this.setLogged(true);
 			return authData;
 		} catch (error) {
 			console.error(error);

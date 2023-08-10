@@ -42,8 +42,8 @@ export class ProductListComponent implements OnInit {
 	}
 
 	getWishList() {
-		this.wishlistService.wishList$.subscribe((cart) => {
-			this.wishList = cart?.items ? cart.items : [];
+		this.wishlistService.wishList$.subscribe((wishlist) => {
+			this.wishList = wishlist?.items ? wishlist.items : [];
 		});
 	}
 

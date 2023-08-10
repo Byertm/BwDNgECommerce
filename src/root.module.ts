@@ -8,8 +8,8 @@ import { RootRoutingModule } from '@src/root-routing.module';
 
 import { PrimeToastModule } from '@shared/modules/primeng-toast.module';
 
-import { CartService } from '@services/cart/cart.service';
-import { WishlistService } from '@services/cart/wishlist.service';
+import { AuthService } from '@services/index';
+import { CartService, WishlistService } from '@services/cart/index';
 
 import { JwtInterceptor } from '@shared/helpers/jwt.interceptor';
 
@@ -23,12 +23,11 @@ import { ErrorPageComponent } from '@pages/index';
 	bootstrap: [RootComponent]
 })
 export class RootModule {
-	// private authService: AuthService, // private localstorageService: LocalStorageService
-	constructor(private cartService: CartService, private wishlistService: WishlistService) {
-		cartService.initCartLocalStorage();
+	constructor(private authService: AuthService, private cartService: CartService, private wishlistService: WishlistService) {
+		this.cartService.initCartLocalStorage();
 
-		wishlistService.initWishlistLocalStorage();
+		this.wishlistService.initWishlistLocalStorage();
 
-		// if (localstorageService.getToken()) authService.startRefreshTokenTimer();
+		this.authService.getAuthFromLocalStorage();
 	}
 }
