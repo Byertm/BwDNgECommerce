@@ -25,8 +25,8 @@ export class ProductDetailComponent implements OnInit {
 	isProductInWishList: boolean = false;
 	productInCartList: any;
 
-	cartList!: ICartItem[];
-	wishList!: IWishItem[];
+	cartList: ICartItem[] = [];
+	wishList: IWishItem[] = [];
 
 	constructor(
 		private route: ActivatedRoute,

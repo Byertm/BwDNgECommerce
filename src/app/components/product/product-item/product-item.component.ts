@@ -13,7 +13,7 @@ import { ProductService } from '@services/index';
 export class ProductItemComponent implements OnInit {
 	@Input() product?: IProduct;
 
-	@Input() wishList!: IWishItem[];
+	@Input() wishList: IWishItem[] = [];
 
 	constructor(private cartService: CartService, private productService: ProductService, private wishlistService: WishlistService, private primeToastService: PrimeToastService) {}
 

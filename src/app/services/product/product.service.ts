@@ -52,7 +52,7 @@ export class ProductService extends BaseService {
 	}
 
 	getProductsWithCategory(pCategoryName: string): Observable<Array<IProduct>> {
-		if (this.productsWithCategorySubject.getValue().length <= 0 || this.productsWithCategorySubject.getValue()?.[0]?.category !== pCategoryName || !!pCategoryName)
+		if (!!pCategoryName && (this.productsWithCategorySubject.getValue().length <= 0 || this.productsWithCategorySubject.getValue()?.[0]?.category !== pCategoryName))
 			this.getData(`products/category/${pCategoryName}`, {}).subscribe((products) => {
 				this.productsWithCategorySubject.next(products);
 			});

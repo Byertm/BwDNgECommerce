@@ -21,7 +21,7 @@ export class WishlistService {
 	constructor(private localStorageService: LocalStorageService) {}
 
 	getWishlist(): IWishList {
-		const wishlistJsonString = localStorage.getItem(this.wishlistKeyFromLS);
+		const wishlistJsonString = this.localStorageService.get(this.wishlistKeyFromLS);
 		const cart: ICart = JSON.parse(wishlistJsonString!);
 		return cart;
 	}

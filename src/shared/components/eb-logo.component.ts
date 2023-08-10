@@ -8,8 +8,8 @@ import { NgIf } from '@angular/common';
 		<img *ngIf="isLetterLogo" alt="E Letter Logo" src="assets/images/e-letter.svg" class="logo-image" />
 
 		<span class="logo-text">
-			<span class="logo-text">Ersin Biltekin</span>
-			<span class="logo-sub-text">Angular 16 E-Commerce Challenge</span>
+			<span class="logo-text">Angular 16 E-Commerce Challenge</span>
+			<span class="logo-sub-text">Ersin Biltekin</span>
 			<!-- <span class="logo-slogan">Byertm Web Design</span> -->
 		</span>
 	</a>`,
