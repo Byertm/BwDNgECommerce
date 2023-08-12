@@ -1,18 +1,8 @@
 import { Injectable } from '@angular/core';
-import { type IProduct } from '@models/product.model';
+import { type ICart, type ICartItem } from '@models/index';
 import { LocalStorageService } from '@services/plugins';
 import { LocalStorageUnionKeys } from '@services/plugins/localStorage.service';
-// import { Cart, type ICart, Product, type IProduct } from '@models/index';
 import { BehaviorSubject } from 'rxjs';
-
-export interface ICart {
-	items?: ICartItem[];
-}
-
-export interface ICartItem {
-	product?: IProduct;
-	quantity?: number;
-}
 
 @Injectable({ providedIn: 'root' })
 export class CartService {

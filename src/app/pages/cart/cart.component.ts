@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '@services/cart/index';
+import { type ICartItem } from '@models/index';
+import { CartService } from '@services/index';
 import { PrimeToastService } from '@services/plugins';
-import { type ICartItem } from '@services/cart/cart.service';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
@@ -18,7 +18,7 @@ export class CartComponent implements OnInit {
 		return this.cartList.length > 0;
 	}
 
-	constructor(private cartService: CartService, private primeToastService: PrimeToastService, private confirmationService: ConfirmationService) {}
+	constructor(private cartService: CartService, private primeToastService: PrimeToastService, private confirmationService: ConfirmationService) { }
 
 	identify(_index: number, item: ICartItem) {
 		return item.product?.id;
@@ -68,7 +68,7 @@ export class CartComponent implements OnInit {
 			accept: () => {
 				this.deleteCartItem(productId);
 			},
-			reject: () => {}
+			reject: () => { }
 		});
 	}
 
@@ -84,7 +84,7 @@ export class CartComponent implements OnInit {
 			accept: () => {
 				this.cartService.emptyCart();
 			},
-			reject: () => {}
+			reject: () => { }
 		});
 	}
 

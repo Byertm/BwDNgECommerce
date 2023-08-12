@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
-import { ProductService } from '@services/index';
-import { WishlistService } from '@services/cart/index';
-import { IWishItem } from '@services/cart/wishlist.service';
-import { type IProduct } from '@models/index';
+import { type IProduct, type IWishItem } from '@models/index';
+import { ProductService, WishlistService } from '@services/index';
 
 @Component({
 	selector: 'eb-product-list',
@@ -24,7 +22,7 @@ export class ProductListComponent implements OnInit {
 		return this.filteredItems?.length ? this.filteredItems.length : 0;
 	}
 
-	constructor(private productService: ProductService, private wishlistService: WishlistService) {}
+	constructor(private productService: ProductService, private wishlistService: WishlistService) { }
 
 	identify(_index: number, item: IProduct) {
 		return item.id;

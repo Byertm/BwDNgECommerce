@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CartService, WishlistService } from '@services/cart/index';
+import { type ICartItem, type IProduct, type IWishItem } from '@models/index';
+import { CartService, WishlistService } from '@services/index';
 import { PrimeToastService } from '@services/plugins';
-import { type ICartItem } from '@services/cart/cart.service';
 import { ConfirmationService } from 'primeng/api';
-import { IProduct } from '@models/index';
-import { IWishItem } from '@services/cart/wishlist.service';
 
 @Component({
 	selector: 'eb-wishlist',
@@ -29,7 +26,7 @@ export class WishlistComponent implements OnInit {
 		private wishlistService: WishlistService,
 		private primeToastService: PrimeToastService,
 		private confirmationService: ConfirmationService
-	) {}
+	) { }
 
 	identify(_index: number, item: IWishItem) {
 		return item.product?.id;
@@ -79,7 +76,7 @@ export class WishlistComponent implements OnInit {
 				this.addProductToCart(product);
 				this.deleteWishItem(product?.id);
 			},
-			reject: () => {}
+			reject: () => { }
 		});
 	}
 
@@ -95,7 +92,7 @@ export class WishlistComponent implements OnInit {
 			accept: () => {
 				this.deleteWishItem(productId);
 			},
-			reject: () => {}
+			reject: () => { }
 		});
 	}
 
@@ -111,7 +108,7 @@ export class WishlistComponent implements OnInit {
 			accept: () => {
 				this.wishlistService.emptyCart();
 			},
-			reject: () => {}
+			reject: () => { }
 		});
 	}
 

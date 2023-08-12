@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { CartService, WishlistService } from '@services/cart/index';
+import { CartService, WishlistService } from '@services/index';
 import { AuthService } from '@services/index';
 
 @Component({
@@ -34,7 +34,6 @@ export class HeaderComponent implements OnInit {
 		// this.isLogged = this.authService.getLogged();
 		this.authService.isLogging().subscribe((isLogged) => {
 			this.isLogged = isLogged;
-			// console.log({ isLogged });
 		});
 	}
 

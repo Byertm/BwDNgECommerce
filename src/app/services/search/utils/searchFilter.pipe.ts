@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IProduct } from '@models/index';
+import { type IProduct } from '@models/index';
 
 @Pipe({ name: 'productFilter' })
 export class ProductFilterPipe<T> implements PipeTransform {

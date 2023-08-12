@@ -9,7 +9,7 @@ import { RootRoutingModule } from '@src/root-routing.module';
 import { PrimeToastModule } from '@shared/modules/primeng-toast.module';
 
 import { AuthService } from '@services/index';
-import { CartService, WishlistService } from '@services/cart/index';
+import { CartService, WishlistService } from '@services/index';
 
 import { JwtInterceptor } from '@shared/helpers/jwt.interceptor';
 

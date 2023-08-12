@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, type Params } from '@angular/router';
+import { Product, type ICartItem, type IProduct, type IWishItem } from '@models/index';
+import { CartService, ProductService, WishlistService } from '@services/index';
 import { PrimeToastService } from '@services/plugins';
-import { ProductService } from '@services/index';
-import { Product, type IProduct } from '@models/index';
-import { CartService, type ICartItem } from '@services/cart/cart.service';
-import { type IWishItem, WishlistService } from '@services/cart/wishlist.service';
 
 @Component({
 	selector: 'eb-product-detail',
@@ -38,7 +36,7 @@ export class ProductDetailComponent implements OnInit {
 		private productService: ProductService,
 		private wishlistService: WishlistService,
 		private primeToastService: PrimeToastService
-	) {}
+	) { }
 
 	identify(_index: number, item: IProduct) {
 		return item.id;

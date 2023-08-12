@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { type IProduct } from '@models/product.model';
-import { type ICartItem, CartService } from '@services/cart/cart.service';
-import { type IWishItem, WishlistService } from '@services/cart/wishlist.service';
+import { type ICartItem, type IProduct, type IWishItem } from '@models/index';
+import { CartService, WishlistService } from '@services/index';
 import { PrimeToastService } from '@services/plugins';
 
 @Component({
@@ -22,7 +21,7 @@ export class ProductItemComponent implements OnInit {
 		return !!this.product?.id && this.wishList?.some?.((i) => i.product?.id === this.product?.id);
 	}
 
-	constructor(private cartService: CartService, private wishlistService: WishlistService, private primeToastService: PrimeToastService) {}
+	constructor(private cartService: CartService, private wishlistService: WishlistService, private primeToastService: PrimeToastService) { }
 
 	addProductToWishList(item: IProduct, event: any) {
 		const wishItem: IWishItem = { product: item };
@@ -48,5 +47,5 @@ export class ProductItemComponent implements OnInit {
 	// 	return cartItemExist;
 	// }
 
-	ngOnInit(): void {}
+	ngOnInit(): void { }
 }

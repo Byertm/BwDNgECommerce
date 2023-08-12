@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-
 import { BaseService } from '@services/common/base.service';
-
-import { type IProduct, Product } from '@models/product.model';
-
+import { type IProduct, Product } from '@models/index';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 const placeholderImageAddress: string = 'https://i.pravatar.cc/';

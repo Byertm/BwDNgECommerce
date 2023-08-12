@@ -1,27 +1,16 @@
-import { Injectable } from '@angular/core';
-// import { type ICart } from '@models/index';
-// import { type ICart } from '@models/cart.model';
-import { type IProduct } from '@models/product.model';
-import { LocalStorageService } from '@services/plugins';
-import { ICart, ICartItem } from '@services/cart/cart.service';
-import { LocalStorageUnionKeys } from '@services/plugins/localStorage.service';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { LocalStorageService } from "@services/plugins";
+import { type ICart, type ICartItem, type IWishList } from "@models/index";
+import { LocalStorageUnionKeys } from "@services/plugins/localStorage.service";
+import { BehaviorSubject } from "rxjs";
 
-export interface IWishList {
-	items?: IWishItem[];
-}
-
-export interface IWishItem {
-	product?: IProduct;
-}
-
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class WishlistService {
 	wishList$: BehaviorSubject<IWishList> = new BehaviorSubject(this.getWishlist());
 
-	private wishlistKeyFromLS: LocalStorageUnionKeys = 'wishlist';
+	private wishlistKeyFromLS: LocalStorageUnionKeys = "wishlist";
 
-	constructor(private localStorageService: LocalStorageService) {}
+	constructor(private localStorageService: LocalStorageService) { }
 
 	getWishlist(): IWishList {
 		const wishlistJsonString = this.localStorageService.get(this.wishlistKeyFromLS);

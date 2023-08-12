@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-
-import { BaseService } from '@services/common/base.service';
-
 import { type IUser, User } from '@models/user.model';
-
+import { BaseService } from '@services/common/base.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

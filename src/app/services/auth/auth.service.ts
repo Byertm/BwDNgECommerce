@@ -4,9 +4,9 @@ import { IUser, UserInput, UserOutput } from '@models/user.model';
 import { UserService } from '@services/user/user.service';
 import { LocalStorageService } from '@services/plugins/index';
 import { AuthHTTPService } from '@services/auth/auth-http.service';
-import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
-import { map, catchError, finalize, tap } from 'rxjs/operators';
 import { LocalStorageUnionKeys } from '@services/plugins/localStorage.service';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService implements OnDestroy {
