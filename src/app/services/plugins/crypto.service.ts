@@ -3,7 +3,7 @@ import * as CryptoJS from 'crypto-js';
 
 @Injectable({ providedIn: 'root' })
 export class CryptoService {
-	private key = "(:ErsinBiltekinBwDSuperCryptoClassInterfaceAbstractAngularCHastagOrCSharpSecretKeyWithCamelCase:)";
+	private key = '(:ErsinBiltekinBwDSuperCryptoClassInterfaceAbstractAngularCHastagOrCSharpSecretKeyWithCamelCase:)';
 
 	encrypt(data: string) {
 		try { return CryptoJS.AES.encrypt(data, this.key).toString(); }
@@ -19,8 +19,7 @@ export class CryptoService {
 			if (!bytes) return data;
 
 			return bytes.toString(CryptoJS.enc.Utf8);
-		}
-		catch (error) {
+		} catch (error) {
 			// console.error("DECRYP ERROR", error);
 			return null;
 		}

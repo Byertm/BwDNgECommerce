@@ -6,7 +6,8 @@
 		"start": "ng serve",
 		"build": "ng build",
 		"watch": "ng build --watch --configuration development",
-		"test": "ng test"
+		"test": "ng test",
+		"pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx,json,html,css,scss}\""
 	},
 	"private": true,
 	"keywords": [
@@ -46,6 +47,7 @@
 		"karma-coverage": "~2.2.1",
 		"karma-jasmine": "~5.1.0",
 		"karma-jasmine-html-reporter": "~2.1.0",
+		"prettier": "^3.0.1",
 		"typescript": "~5.1.6"
 	}
 }

@@ -40,7 +40,7 @@
 
 		<p-confirmPopup></p-confirmPopup>
 
-		<div *ngFor="let wishlistItem of wishList; trackBy:identify" class="wishlist-item">
+		<div *ngFor="let wishlistItem of wishList; trackBy: identify" class="wishlist-item">
 			<div class="wishlist-item-img">
 				<img [src]="wishlistItem.product?.image" [alt]="wishlistItem.product?.title" onerror="this.onerror = null;this.src='assets/images/ImageNotFound.png'" />
 			</div>
@@ -57,10 +57,10 @@
 						(click)="confirmTransferProduct($event, wishlistItem.product!)"
 						[attr.disabled]="checkProductInCartList(wishlistItem.product?.id)"
 						class="btn me-2 wishlist-item-transfer-btn"
-						[ngClass]="{ 'bg-success text-white':!checkProductInCartList(wishlistItem.product?.id), 'bg-warning disabled cursor-not-allowed':checkProductInCartList(wishlistItem.product?.id) }">
+						[ngClass]="{ 'bg-success text-white': !checkProductInCartList(wishlistItem.product?.id), 'bg-warning disabled cursor-not-allowed': checkProductInCartList(wishlistItem.product?.id) }">
 						<i class="me-1 pi pi-shopping-cart"></i>
-						{{ isProductInCartList ? 'Sepete Eklenmiş' : 'Sepete Aktar' }}
-						<div class="visually-hidden">{{ isProductInCartList ? 'Sepete Eklenmiş' : 'Sepete Aktar' }}</div>
+						{{ isProductInCartList ? "Sepete Eklenmiş" : "Sepete Aktar" }}
+						<div class="visually-hidden">{{ isProductInCartList ? "Sepete Eklenmiş" : "Sepete Aktar" }}</div>
 					</a>
 				</div>
 

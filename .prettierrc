@@ -2,7 +2,7 @@
 	"semi": true,
 	"tabWidth": 4,
 	"useTabs": true,
-	"printWidth": 120,
+	"printWidth": 240,
 	"endOfLine": "auto",
 	"singleQuote": true,
 	"proseWrap": "never",
@@ -11,17 +11,9 @@
 	"trailingComma": "none",
 	"vueIndentScriptAndStyle": true,
 	"overrides": [
-		{
-			"files": "*.ts",
-			"options": { "parser": "typescript", "printWidth": 180, "singleQuote": true }
-		},
-		{
-			"files": "*.vue",
-			"options": { "parser": "vue", "printWidth": 240, "singleQuote": false }
-		},
-		{
-			"files": "*.html",
-			"options": { "parser": "html", "printWidth": 240, "singleQuote": false }
-		}
+		{ "files": "*.ts", "options": { "parser": "typescript", "printWidth": 240, "singleQuote": false } },
+		{ "files": "*.vue", "options": { "parser": "vue", "printWidth": 240, "singleQuote": false } },
+		{ "files": "*.html", "options": { "parser": "html", "printWidth": 240, "singleQuote": false } },
+		{ "files": "*.component.html", "options": { "parser": "angular", "printWidth": 240, "singleQuote": false } }
 	]
 }

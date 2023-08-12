@@ -11,12 +11,12 @@ export class OnOffService implements OnInit, OnDestroy {
 		this.onlineEvent = fromEvent(window, 'online');
 		this.offlineEvent = fromEvent(window, 'offline');
 
-		this.subscriptions.push(this.onlineEvent.subscribe(e => {
+		this.subscriptions.push(this.onlineEvent.subscribe((e) => {
 			// handle online mode
 			console.log('Online...');
 		}));
 
-		this.subscriptions.push(this.offlineEvent.subscribe(e => {
+		this.subscriptions.push(this.offlineEvent.subscribe((e) => {
 			// handle offline mode
 			console.log('Offline...');
 		}));
@@ -24,5 +24,5 @@ export class OnOffService implements OnInit, OnDestroy {
 
 	ngOnInit(): void { this.handleAppConnectivityChanges(); }
 
-	ngOnDestroy(): void { this.subscriptions.forEach(subscription => subscription.unsubscribe()); }
+	ngOnDestroy(): void { this.subscriptions.forEach((subscription) => subscription.unsubscribe()); }
 }

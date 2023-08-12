@@ -62,13 +62,13 @@
 							<label class="form-label d-block">Ürün Adedi</label>
 							<div class="input-group input-spinner">
 								<div class="quantity-selector">
-									<button type="button" (click)="updateCartItemQuantity(quantity , product  , '-')" [disabled]="quantity === 0" class="btn btn-quantity">
+									<button type="button" (click)="updateCartItemQuantity(quantity, product, '-')" [disabled]="quantity === 0" class="btn btn-quantity">
 										<span>-</span>
 									</button>
 
 									<div class="quantity-number">{{ quantity }}</div>
 
-									<button type="button" (click)="updateCartItemQuantity(quantity! , product  , '+')" class="btn btn-quantity">
+									<button type="button" (click)="updateCartItemQuantity(quantity!, product, '+')" class="btn btn-quantity">
 										<span>+</span>
 									</button>
 								</div>
@@ -78,7 +78,7 @@
 
 					<a (click)="addProductToCart(product)" class="btn btn-warning me-2">
 						<i class="me-1 pi pi-shopping-cart"></i>
-						{{ productInCartList ? 'Sepete Eklendi' : 'Sepete Ekle' }}
+						{{ productInCartList ? "Sepete Eklendi" : "Sepete Ekle" }}
 					</a>
 
 					<a *ngIf="!isProductInWishList" (click)="addProductToWishList(product)" class="btn btn-light me-2">
@@ -101,7 +101,7 @@
 			</div>
 
 			<div class="related-product-wrapper">
-				<ng-container *ngFor="let product of categoryRelatedProducts; trackBy:identify">
+				<ng-container *ngFor="let product of categoryRelatedProducts; trackBy: identify">
 					<eb-product-item *ngIf="!!product" [product]="product" [wishList]="wishList"></eb-product-item>
 				</ng-container>
 			</div>

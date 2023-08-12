@@ -11,7 +11,7 @@
 	&:after {
 		content: '';
 		position: absolute;
-		top: ($size - $thickness) / 2;
+		top: calc(($size - $thickness) / 2);
 		left: 0;
 		right: 0;
 		height: $thickness;
@@ -220,8 +220,9 @@
 					align-items: center;
 					cursor: pointer;
 					text-decoration: none;
-					transition: opacity 100ms, rotate 150ms;
-
+					transition:
+						opacity 100ms,
+						rotate 150ms;
 					.icon-cross {
 						@include cross(1rem, #ffffff, 0.125rem);
 					}

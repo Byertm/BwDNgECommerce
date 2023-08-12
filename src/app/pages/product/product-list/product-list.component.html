@@ -3,7 +3,7 @@
 		<span>Kategori:</span>
 		<select [(ngModel)]="categoryModel" class="form-select">
 			<option value="">Hepsi</option>
-			<option *ngFor="let cat of productCategories; let i = index;" [attr.data-index]="i" [value]="cat">{{ cat }}</option>
+			<option *ngFor="let category of productCategories; let i = index" [attr.data-index]="i" [value]="category">{{ category }}</option>
 		</select>
 	</div>
 
@@ -25,7 +25,7 @@
 </div>
 
 <div class="product-list">
-	<ng-container #productContainer *ngFor="let product of products | productFilter: filterModel:searchModel:categoryModel; trackBy: identify">
+	<ng-container #productContainer *ngFor="let product of products | productFilter: filterModel : searchModel : categoryModel; trackBy: identify">
 		<eb-product-item *ngIf="!!product" [product]="product" [wishList]="wishList"></eb-product-item>
 	</ng-container>
 </div>

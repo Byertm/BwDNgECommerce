@@ -2,14 +2,14 @@
 	<div class="product">
 		<div class="product-image">
 			<a routerLink="/app/products/detail/{{ product.id }}" style="height: 227px">
-				<!-- <figure *ngIf="product.image" style="background-image: url({{product.image}});" alt="product-image"> -->
-				<img *ngIf="product.image" [src]="product.image" alt="product-image" onerror="this.onerror = null; this.src='assets/images/ImageNotFound.png';" />
-				<!-- </figure> -->
+				<figure *ngIf="product.image" [attr.alt]="product.title">
+					<img *ngIf="product.image" [src]="product.image" [alt]="product.title" onerror="this.onerror = null; this.src='assets/images/ImageNotFound.png';" />
+				</figure>
 			</a>
 
 			<span *ngIf="isProductSale" class="product-sale">İndirimde</span>
 
-			<button type="button" [class.is-favourite]="isProductInWishList" (click)="addProductToWishList(product , $event)" class="btn-favourite btn-circle">
+			<button type="button" [class.is-favourite]="isProductInWishList" (click)="addProductToWishList(product, $event)" class="btn-favourite btn-circle">
 				<i class="pi pi-heart"></i>
 			</button>
 		</div>
@@ -20,7 +20,7 @@
 				<span class="badge badge-pill bg-primary p-1">{{ product.category }}</span>
 			</a>
 
-			<div class="rating-stars">
+			<div class="rating-stars-wrapper">
 				<p-rating [(ngModel)]="product.rating.rate" [readonly]="true" [cancel]="false"></p-rating>
 
 				<span class="badge badge-pill bg-dark text-light p-1">{{ product.rating.count }} kişi oyladı</span>
@@ -28,8 +28,8 @@
 
 			<div class="product-content__footer">
 				<div class="product-content__footer-price">
-					<h5 class="product-price">${{ product.price | number : '1.2-2' }}</h5>
-					<span *ngIf="isProductSale">${{ product.price * 1.5 | number : '1.2-2' }}</span>
+					<h5 class="product-price">${{ product.price | number: "1.2-2" }}</h5>
+					<span *ngIf="isProductSale">${{ product.price * 1.5 | number: "1.2-2" }}</span>
 				</div>
 
 				<span class="product-atc rounded-circle">

@@ -40,25 +40,25 @@
 
 		<p-confirmPopup></p-confirmPopup>
 
-		<div *ngFor="let cartItem of cartList; trackBy:identify" class="cart-item">
+		<div *ngFor="let cartItem of cartList; trackBy: identify" class="cart-item">
 			<div class="cart-item-img">
 				<img [src]="cartItem.product?.image" [alt]="cartItem.product?.title" onerror="this.onerror = null;this.src='assets/images/ImageNotFound.png'" />
 			</div>
 
 			<div class="cart-item-description">
-				<a routerLink="/app/products/detail/{{cartItem.product?.id!}}" pTooltip="Ürün detayına gitmek için tıklayın" tooltipPosition="top" class="cart-item-title"> {{ cartItem.product?.title }} </a>
+				<a routerLink="/app/products/detail/{{ cartItem.product?.id! }}" pTooltip="Ürün detayına gitmek için tıklayın" tooltipPosition="top" class="cart-item-title"> {{ cartItem.product?.title }} </a>
 
 				<h5 class="cart-item-price">${{ cartItem.product?.price }}</h5>
 
 				<div class="input-group input-spinner">
 					<div class="quantity-selector">
-						<button type="button" (click)="updateCartItemQuantity(cartItem.quantity! , cartItem  , '-')" [disabled]="cartItem.quantity === 1" class="btn btn-quantity">
+						<button type="button" (click)="updateCartItemQuantity(cartItem.quantity!, cartItem, '-')" [disabled]="cartItem.quantity === 1" class="btn btn-quantity">
 							<span>-</span>
 						</button>
 
 						<div class="quantity-number">{{ cartItem.quantity }}</div>
 
-						<button type="button" (click)="updateCartItemQuantity(cartItem.quantity! , cartItem  , '+')" class="btn btn-quantity">
+						<button type="button" (click)="updateCartItemQuantity(cartItem.quantity!, cartItem, '+')" class="btn btn-quantity">
 							<span>+</span>
 						</button>
 					</div>
@@ -75,7 +75,9 @@
 	</div>
 
 	<div *ngIf="cartCount" class="cart-total">
-		<h5 class="total-price">Toplam: <span> ${{ totalPrice | number : '1.2-2' }}</span></h5>
+		<h5 class="total-price">
+			Toplam: <span> ${{ totalPrice | number: "1.2-2" }}</span>
+		</h5>
 
 		<!-- <div class="d-flex checkout-btn">
 			<button type="button" (click)="navigateToCheckout()" class="btn btn-warning">Checkout</button>

@@ -14,14 +14,13 @@ export interface ICartItem {
 	quantity?: number;
 }
 
-
 @Injectable({ providedIn: 'root' })
 export class CartService {
 	cart$: BehaviorSubject<ICart> = new BehaviorSubject(this.getCart());
 
 	private cartKeyFromLS: LocalStorageUnionKeys = 'cart';
 
-	constructor(private localStorageService: LocalStorageService) {}
+	constructor(private localStorageService: LocalStorageService) { }
 
 	initCartLocalStorage() {
 		const cart: ICart = this.getCart();

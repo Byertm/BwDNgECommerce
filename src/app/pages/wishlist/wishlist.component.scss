@@ -175,7 +175,9 @@
 					align-items: center;
 					cursor: pointer;
 					text-decoration: none;
-					transition: opacity 100ms, rotate 150ms;
+					transition:
+						opacity 100ms,
+						rotate 150ms;
 
 					&:hover,
 					&:focus {

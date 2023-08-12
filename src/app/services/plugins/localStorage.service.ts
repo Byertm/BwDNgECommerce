@@ -4,7 +4,7 @@ import { CryptoService } from '@services/plugins';
 
 type TKeys = `${LocalStorageKeys}`;
 
-type SetData<T> = { key: TKeys; value: T; };
+type SetData<T> = { key: TKeys; value: T };
 
 export type LocalStorageUnionKeys = TKeys;
 

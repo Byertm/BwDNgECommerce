@@ -6,29 +6,13 @@
 		"eb-ng-e-commerce": {
 			"projectType": "application",
 			"schematics": {
-				"@schematics/angular:application": {
-					"strict": true,
-					"skipTests": true
-				},
-				"@schematics/angular:component": {
-					"style": "scss",
-					"skipTests": true
-				},
-				"@schematics/angular:directive": {
-					"skipTests": true
-				},
-				"@schematics/angular:service": {
-					"skipTests": true
-				},
-				"@schematics/angular:module": {
-					"skipTests": true
-				},
-				"@schematics/angular:class": {
-					"skipTests": true
-				},
-				"@schematics/angular:pipe": {
-					"skipTests": true
-				}
+				"@schematics/angular:application": { "strict": true, "skipTests": true },
+				"@schematics/angular:component": { "style": "scss", "skipTests": true },
+				"@schematics/angular:directive": { "skipTests": true },
+				"@schematics/angular:service": { "skipTests": true },
+				"@schematics/angular:module": { "skipTests": true },
+				"@schematics/angular:class": { "skipTests": true },
+				"@schematics/angular:pipe": { "skipTests": true }
 			},
 			"root": "",
 			"sourceRoot": "src",
@@ -37,27 +21,16 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
+						"allowedCommonJsDependencies": ["crypto-js"],
 						"outputPath": "dist/eb-ng-e-commerce",
 						"index": "src/index.html",
 						"main": "src/main.ts",
-						"polyfills": [
-							"zone.js"
-						],
+						"polyfills": ["zone.js"],
 						"tsConfig": "tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
-						"assets": [
-							"src/favicon.ico",
-							"src/assets"
-						],
-						"styles": [
-							"node_modules/bootstrap/dist/css/bootstrap.css",
-							"node_modules/primeng/resources/primeng.min.css",
-							"src/assets/theme.css",
-							"src/styles.scss"
-						],
-						"scripts": [
-							"node_modules/bootstrap/dist/js/bootstrap.js"
-						]
+						"assets": ["src/favicon.ico", "src/assets"],
+						"styles": ["node_modules/bootstrap/dist/css/bootstrap.css", "node_modules/primeng/resources/primeng.min.css", "src/assets/theme.css", "src/styles.scss"],
+						"scripts": ["node_modules/bootstrap/dist/js/bootstrap.js"]
 					},
 					"configurations": {
 						"production": {
@@ -68,16 +41,8 @@
 								}
 							],
 							"budgets": [
-								{
-									"type": "initial",
-									"maximumWarning": "1mb",
-									"maximumError": "2mb"
-								},
-								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "4kb",
-									"maximumError": "8kb"
-								}
+								{ "type": "initial", "maximumWarning": "1mb", "maximumError": "2mb" },
+								{ "type": "anyComponentStyle", "maximumWarning": "4kb", "maximumError": "8kb" }
 							],
 							"outputHashing": "all"
 						},
@@ -110,16 +75,8 @@
 							"namedChunks": false,
 							"outputHashing": "all",
 							"budgets": [
-								{
-									"type": "initial",
-									"maximumWarning": "25mb",
-									"maximumError": "25mb"
-								},
-								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "22kb",
-									"maximumError": "28kb"
-								}
+								{ "type": "initial", "maximumWarning": "25mb", "maximumError": "25mb" },
+								{ "type": "anyComponentStyle", "maximumWarning": "22kb", "maximumError": "28kb" }
 							]
 						}
 					},
@@ -146,25 +103,12 @@
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
-						"polyfills": [
-							"zone.js",
-							"zone.js/testing"
-						],
+						"polyfills": ["zone.js", "zone.js/testing"],
 						"tsConfig": "tsconfig.spec.json",
 						"inlineStyleLanguage": "scss",
-						"assets": [
-							"src/favicon.ico",
-							"src/assets"
-						],
-						"styles": [
-							"node_modules/bootstrap/dist/css/bootstrap.css",
-							"node_modules/primeng/resources/primeng.min.css",
-							"src/assets/theme.css",
-							"src/styles.scss"
-						],
-						"scripts": [
-							"node_modules/bootstrap/dist/js/bootstrap.js"
-						]
+						"assets": ["src/favicon.ico", "src/assets"],
+						"styles": ["node_modules/bootstrap/dist/css/bootstrap.css", "node_modules/primeng/resources/primeng.min.css", "src/assets/theme.css", "src/styles.scss"],
+						"scripts": ["node_modules/bootstrap/dist/js/bootstrap.js"]
 					}
 				}
 			}

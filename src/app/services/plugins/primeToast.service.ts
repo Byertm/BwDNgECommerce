@@ -41,7 +41,7 @@ export class PrimeToastService {
 
 	private toastListKeyFromLS: LocalStorageUnionKeys = 'toastList';
 
-	constructor(private messageService: MessageService, private localStorageService: LocalStorageService) {}
+	constructor(private messageService: MessageService, private localStorageService: LocalStorageService) { }
 
 	//#region Local Storage Process
 	isToastLS(): boolean {
