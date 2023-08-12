@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { CartService } from '@services/cart/index';
 import { PrimeToastService } from '@services/plugins';
 import { type ICartItem } from '@services/cart/cart.service';
@@ -19,7 +18,7 @@ export class CartComponent implements OnInit {
 		return this.cartList.length > 0;
 	}
 
-	constructor(private router: Router, private cartService: CartService, private primeToastService: PrimeToastService, private confirmationService: ConfirmationService) {}
+	constructor(private cartService: CartService, private primeToastService: PrimeToastService, private confirmationService: ConfirmationService) {}
 
 	identify(_index: number, item: ICartItem) {
 		return item.product?.id;
@@ -28,6 +27,7 @@ export class CartComponent implements OnInit {
 	getCartList() {
 		this.cartService.cart$.subscribe((cart) => {
 			this.cartList = cart?.items ? cart.items : [];
+			this.cartCount = cart?.items?.length ?? 0;
 		});
 	}
 
@@ -54,10 +54,6 @@ export class CartComponent implements OnInit {
 
 		if (value === 0) this.deleteCartItem(cartItem.product?.id!);
 		else this.cartService.setCartItem({ product: cartItem.product, quantity: value }, true);
-	}
-
-	navigateToCheckout() {
-		this.router.navigateByUrl('/app/checkout');
 	}
 
 	confirmDeleteProduct(event: Event, productId: number) {
@@ -93,10 +89,6 @@ export class CartComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.cartService.cart$.subscribe((cart) => {
-			this.cartCount = cart?.items?.length ?? 0;
-		});
-
 		this.getCartList();
 
 		this.getTotalPrice();

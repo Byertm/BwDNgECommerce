@@ -25,7 +25,6 @@ export class ProductItemComponent implements OnInit {
 	constructor(private cartService: CartService, private wishlistService: WishlistService, private primeToastService: PrimeToastService) {}
 
 	addProductToWishList(item: IProduct, event: any) {
-		debugger;
 		const wishItem: IWishItem = { product: item };
 		if (this.isProductInWishList) {
 			event.currentTarget.classList.remove('is-favourite');

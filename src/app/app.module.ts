@@ -15,7 +15,7 @@ import { RatingModule } from 'primeng/rating';
 import { AppComponent } from '@app/app.component';
 import { ProductItemComponent } from '@components/index';
 import { HeaderComponent, MainComponent, FooterComponent } from '@layouts/index';
-import { ProductListComponent, ProductDetailComponent, CartComponent } from '@pages/index';
+import { CartComponent, ProductListComponent, ProductDetailComponent, WishlistComponent } from '@pages/index';
 import { ProductFilterPipe } from '@services/search';
 
 import { EBLogoComponent } from '@shared/components';
@@ -30,6 +30,7 @@ import { EBLogoComponent } from '@shared/components';
 		ProductListComponent,
 		ProductDetailComponent,
 		ProductItemComponent,
+		WishlistComponent,
 		ProductFilterPipe
 	],
 	imports: [

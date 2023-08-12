@@ -1,53 +1,7 @@
-@mixin cross($size: 1rem, $color: currentColor, $thickness: 0.063rem) {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	background: none;
-	position: relative;
-	width: $size;
-	height: $size;
-
-	&:before,
-	&:after {
-		content: '';
-		position: absolute;
-		top: ($size - $thickness) / 2;
-		left: 0;
-		right: 0;
-		height: $thickness;
-		background: $color;
-		border-radius: $thickness;
-	}
-
-	&:before {
-		transform: rotate(45deg);
-	}
-
-	&:after {
-		transform: rotate(-45deg);
-	}
-
-	span {
-		display: block;
-	}
-}
-
 :host {
 	display: block;
 
-	.mask {
-		width: 100%;
-		height: 1000%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		background-color: rgba(0, 0, 0, 0.45);
-		z-index: 999;
-	}
-
-	.cart {
+	.wishlist {
 		display: flex;
 		flex-direction: column;
 		height: 100vh;
@@ -129,7 +83,7 @@
 			line-height: 1.5715;
 			word-wrap: break-word;
 
-			.empty-cart {
+			.empty-wishlist {
 				margin: 0 8px;
 				font-size: 16px;
 				line-height: 1.5715;
@@ -178,7 +132,7 @@
 				}
 			}
 
-			.cart-item {
+			.wishlist-item {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
@@ -189,6 +143,7 @@
 					border-bottom: 1px solid #eff1f2;
 				}
 
+				// &-transfer-btn,
 				&-delete-btn {
 					display: inline-block;
 					color: inherit;
@@ -221,10 +176,6 @@
 					cursor: pointer;
 					text-decoration: none;
 					transition: opacity 100ms, rotate 150ms;
-
-					.icon-cross {
-						@include cross(1rem, #ffffff, 0.125rem);
-					}
 
 					&:hover,
 					&:focus {
@@ -263,7 +214,7 @@
 				&-description {
 					margin-right: 1.5625em;
 
-					a.cart-item-title {
+					a.wishlist-item-title {
 						color: #0d0d0d;
 						font-size: 0.9375em;
 						font-weight: normal;
@@ -279,7 +230,7 @@
 						margin-bottom: 1em;
 					}
 
-					h5.cart-item-price {
+					h5.wishlist-item-price {
 						color: #0d0d0d;
 						font-size: 1.0625em;
 						font-weight: 600;
@@ -332,61 +283,22 @@
 		}
 	}
 
-	.checkout-btn,
-	.btn-empty-list {
-		button {
-			font-size: 0.8125em;
-			letter-spacing: 0.2em;
-			text-transform: uppercase;
-			height: 3.0769230769em;
-			flex-grow: 1;
-			border: 0;
-			padding: 2.4px 16px;
-			border-radius: 32px;
+	.btn-empty-list button {
+		font-size: 0.8125em;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		height: 3.0769230769em;
+		flex-grow: 1;
+		border: 0;
+		padding: 2.4px 16px;
+		border-radius: 32px;
 
-			&:hover a {
-				color: #fff;
-			}
-		}
-	}
-
-	.quantity {
-		&-selector {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background-color: #0d6efd;
-			border-radius: 999px;
-			max-width: 6.25em;
-			padding: 0.3125em 0.8125em;
-			max-width: 5em;
-			padding: 0.1875em 0.625em;
-		}
-
-		&-number {
+		&:hover a {
 			color: #fff;
-			padding: 0 1.25em;
-			font-size: 0.75em;
-			cursor: default;
 		}
 	}
 
-	.btn-quantity {
-		color: #fff;
-		padding: 0;
-		font-size: 1.125em;
-		line-height: 1;
-		height: auto;
-		border-radius: 2px;
-		border-color: transparent;
-
-		&.btn[disabled] {
-			cursor: not-allowed;
-		}
-
-		&:hover,
-		&:active {
-			border-color: transparent;
-		}
+	.cursor-not-allowed {
+		cursor: not-allowed;
 	}
 }

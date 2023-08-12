@@ -1,14 +1,14 @@
-<div class="cart-list-wrapper is-open">
-	<div class="cart-header">
-		<div class="cart-title">Alışveriş Sepeti ({{ cartCount }})</div>
+<div class="wishlist-list-wrapper is-open">
+	<div class="wishlist-header">
+		<div class="wishlist-title">İstek Listesi ({{ wishlistCount }})</div>
 
-		<div *ngIf="isCartListCount" class="d-flex btn-empty-list">
-			<button type="button" (click)="confirmEmptyCartList($event)" class="btn btn-warning">Sepeti Boşalt</button>
+		<div *ngIf="isWishListCount" class="d-flex btn-empty-list">
+			<button type="button" (click)="confirmEmptyWishList($event)" class="btn btn-warning">İstek Listesini Boşalt</button>
 		</div>
 	</div>
 
-	<div class="cart-body">
-		<div *ngIf="!cartCount" class="empty-cart">
+	<div class="wishlist-body">
+		<div *ngIf="!wishlistCount" class="empty-wishlist">
 			<div class="empty-image">
 				<svg class="empty-img-default" width="184" height="152" viewBox="0 0 184 152" xmlns="http://www.w3.org/2000/svg">
 					<g fill="none" fill-rule="evenodd">
@@ -35,50 +35,42 @@
 				</svg>
 			</div>
 
-			<p class="empty-description">Sepet listesinde ürün yok</p>
+			<p class="empty-description">İstek listesinde ürün yok</p>
 		</div>
 
 		<p-confirmPopup></p-confirmPopup>
 
-		<div *ngFor="let cartItem of cartList; trackBy:identify" class="cart-item">
-			<div class="cart-item-img">
-				<img [src]="cartItem.product?.image" [alt]="cartItem.product?.title" onerror="this.onerror = null;this.src='assets/images/ImageNotFound.png'" />
+		<div *ngFor="let wishlistItem of wishList; trackBy:identify" class="wishlist-item">
+			<div class="wishlist-item-img">
+				<img [src]="wishlistItem.product?.image" [alt]="wishlistItem.product?.title" onerror="this.onerror = null;this.src='assets/images/ImageNotFound.png'" />
 			</div>
 
-			<div class="cart-item-description">
-				<a routerLink="/app/products/detail/{{cartItem.product?.id!}}" pTooltip="Ürün detayına gitmek için tıklayın" tooltipPosition="top" class="cart-item-title"> {{ cartItem.product?.title }} </a>
+			<div class="wishlist-item-description">
+				<a routerLink="/app/products/detail/{{ wishlistItem.product?.id! }}" pTooltip="Ürün detayına gitmek için tıklayın" tooltipPosition="top" class="wishlist-item-title"> {{ wishlistItem.product?.title }} </a>
 
-				<h5 class="cart-item-price">${{ cartItem.product?.price }}</h5>
+				<h5 class="wishlist-item-price">${{ wishlistItem.product?.price }}</h5>
+			</div>
 
-				<div class="input-group input-spinner">
-					<div class="quantity-selector">
-						<button type="button" (click)="updateCartItemQuantity(cartItem.quantity! , cartItem  , '-')" [disabled]="cartItem.quantity === 1" class="btn btn-quantity">
-							<span>-</span>
-						</button>
+			<div class="ms-auto d-flex justify-content-center align-items-center gap-2">
+				<div pTooltip="Ürünü Sepete Aktar" tooltipPosition="top" class="wishlist-item-transfer-btn-wrapper">
+					<a
+						(click)="confirmTransferProduct($event, wishlistItem.product!)"
+						[attr.disabled]="checkProductInCartList(wishlistItem.product?.id)"
+						class="btn me-2 wishlist-item-transfer-btn"
+						[ngClass]="{ 'bg-success text-white':!checkProductInCartList(wishlistItem.product?.id), 'bg-warning disabled cursor-not-allowed':checkProductInCartList(wishlistItem.product?.id) }">
+						<i class="me-1 pi pi-shopping-cart"></i>
+						{{ isProductInCartList ? 'Sepete Eklenmiş' : 'Sepete Aktar' }}
+						<div class="visually-hidden">{{ isProductInCartList ? 'Sepete Eklenmiş' : 'Sepete Aktar' }}</div>
+					</a>
+				</div>
 
-						<div class="quantity-number">{{ cartItem.quantity }}</div>
-
-						<button type="button" (click)="updateCartItemQuantity(cartItem.quantity! , cartItem  , '+')" class="btn btn-quantity">
-							<span>+</span>
-						</button>
-					</div>
+				<div pTooltip="Ürünü Sil" tooltipPosition="top" class="wishlist-item-delete-btn-wrapper">
+					<a (click)="confirmDeleteProduct($event, wishlistItem.product?.id!)" class="wishlist-item-delete-btn">
+						<i class="me-1 pi pi-times"></i>
+						<div class="visually-hidden">İstek Listesinden Sil</div>
+					</a>
 				</div>
 			</div>
-
-			<div pTooltip="Ürünü Sil" tooltipPosition="top" class="cart-item-delete-btn-wrapper">
-				<a (click)="confirmDeleteProduct($event, cartItem.product?.id!)" class="cart-item-delete-btn">
-					<span class="icon-cross"></span>
-					<div class="visually-hidden">Ürünü Sil</div>
-				</a>
-			</div>
 		</div>
-	</div>
-
-	<div *ngIf="cartCount" class="cart-total">
-		<h5 class="total-price">Toplam: <span> ${{ totalPrice | number : '1.2-2' }}</span></h5>
-
-		<!-- <div class="d-flex checkout-btn">
-			<button type="button" (click)="navigateToCheckout()" class="btn btn-warning">Checkout</button>
-		</div> -->
 	</div>
 </div>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from '@app/app.component';
-import { CartComponent, ProductListComponent, ProductDetailComponent } from '@pages/index';
+import { CartComponent, ProductListComponent, ProductDetailComponent, WishlistComponent } from '@pages/index';
 import { AuthGuard } from '@services/index';
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
 			{ path: 'products', component: ProductListComponent },
 			{ path: 'products/detail/:id', component: ProductDetailComponent },
 			{ path: 'cart', component: CartComponent },
-			{ path: 'wishlist', component: CartComponent },
+			{ path: 'wishlist', component: WishlistComponent },
 			{ path: '**', redirectTo: '/error', pathMatch: 'full' }
 		],
 		canActivate: [AuthGuard]
