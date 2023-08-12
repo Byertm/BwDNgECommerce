@@ -14,10 +14,6 @@ export interface ICartItem {
 	quantity?: number;
 }
 
-export interface ICartItemDetailed {
-	product?: IProduct;
-	quantity?: number;
-}
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
@@ -34,6 +30,7 @@ export class CartService {
 			const intialCartJson = JSON.stringify(intialCart);
 			this.localStorageService.set({ key: this.cartKeyFromLS, value: intialCartJson });
 		}
+		this.cart$.next(cart);
 	}
 
 	emptyCart() {

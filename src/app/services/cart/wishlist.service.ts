@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
+// import { type ICart } from '@models/index';
+// import { type ICart } from '@models/cart.model';
+import { type IProduct } from '@models/product.model';
 import { LocalStorageService } from '@services/plugins';
-import { ICart, ICartItem } from './cart.service';
-import { BehaviorSubject } from 'rxjs';
+import { ICart, ICartItem } from '@services/cart/cart.service';
 import { LocalStorageUnionKeys } from '@services/plugins/localStorage.service';
+import { BehaviorSubject } from 'rxjs';
 
 export interface IWishList {
 	items?: IWishItem[];
 }
 
 export interface IWishItem {
-	product?: any;
+	product?: IProduct;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -33,6 +36,7 @@ export class WishlistService {
 			const wishListCartJson = JSON.stringify(wishListCart);
 			this.localStorageService.setBasic(this.wishlistKeyFromLS, wishListCartJson);
 		}
+		this.wishList$.next(wishlist);
 	}
 
 	emptyCart() {
@@ -44,10 +48,10 @@ export class WishlistService {
 
 	setWishItem(cartItem: ICartItem, updateCartItem?: boolean): ICart {
 		const wishProductList = this.getWishlist();
-		const cartItemExist = wishProductList?.items?.find((item) => item.product.id === cartItem?.product?.id);
+		const cartItemExist = wishProductList?.items?.find((item) => item.product?.id === cartItem?.product?.id);
 		if (cartItemExist) {
 			wishProductList.items?.map((item) => {
-				if (item.product.id === cartItem?.product?.id) {
+				if (item.product?.id === cartItem?.product?.id) {
 					// if (updateCartItem) item.quantity = cartItem.quantity;
 					// else item.quantity = item.quantity! + cartItem.quantity!;
 					// return item;
@@ -61,9 +65,9 @@ export class WishlistService {
 		return wishProductList;
 	}
 
-	deleteWishItem(productId: string) {
+	deleteWishItem(productId?: number) {
 		const wishProductList = this.getWishlist();
-		const newWishList = wishProductList.items?.filter((item) => item.product.id !== productId);
+		const newWishList = wishProductList.items?.filter((item) => item.product?.id !== productId);
 
 		wishProductList.items = newWishList;
 

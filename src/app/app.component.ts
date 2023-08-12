@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
 	welcomeMessage() {
 		Promise.resolve(1).then(() => {
-			this.primeToastService.success({ summary: 'Hoşgeldiniz!', detail: 'Angular 16 - E-Commerce Challenge', position: 'top-center' });
+			this.primeToastService.info({ summary: 'Hoşgeldiniz!', detail: 'Angular 16 - E-Commerce Challenge', position: 'top-center' });
 		});
 	}
 

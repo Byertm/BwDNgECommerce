@@ -17,7 +17,7 @@
 		<div class="row">
 			<aside class="col-lg-4">
 				<figure *ngIf="product.image" (mousemove)="imageZoom($event)" class="zoom-image" style="background-image: url({{product.image}});" [style.backgroundPosition]="backgroundPos">
-					<img class="rounded" [src]="product.image" alt="clothes" onerror="this.onerror = null;this.src='assets/images/ImageNotFound.png'; imgNotFounded=true" />
+					<img [src]="product.image" [alt]="product.title" onerror="this.onerror = null;this.src='assets/images/ImageNotFound.png'; imgNotFounded=true" class="rounded" />
 				</figure>
 			</aside>
 
@@ -62,7 +62,7 @@
 							<label class="form-label d-block">Ürün Adedi</label>
 							<div class="input-group input-spinner">
 								<div class="quantity-selector">
-									<button type="button" (click)="updateCartItemQuantity(quantity , product  , '-')" [disabled]="quantity === 1" class="btn btn-quantity">
+									<button type="button" (click)="updateCartItemQuantity(quantity , product  , '-')" [disabled]="quantity === 0" class="btn btn-quantity">
 										<span>-</span>
 									</button>
 
@@ -76,17 +76,20 @@
 						</div>
 					</div>
 
-					<a href="#" (click)="$event.preventDefault(); addProductToCart(product)" class="btn btn-warning me-2">
+					<a (click)="addProductToCart(product)" class="btn btn-warning me-2">
 						<i class="me-1 pi pi-shopping-cart"></i>
 						{{ productInCartList ? 'Sepete Eklendi' : 'Sepete Ekle' }}
 					</a>
 
-					<a *ngIf="!isProductInWishList" href="#" (click)="$event.preventDefault(); addProductToWishList(product)" class="btn btn-light me-2">
+					<a *ngIf="!isProductInWishList" (click)="addProductToWishList(product)" class="btn btn-light me-2">
 						<i class="pi pi-heart text-danger"></i>
 						İstek Listesine Ekle
 					</a>
 
-					<a *ngIf="isProductInWishList" href="#" (click)="$event.preventDefault(); addProductToWishList(product)" class="btn btn-light me-2"> <i class="me-1 pi pi-heart-fill text-danger"></i> İstek Listesinden Çıkar </a>
+					<a *ngIf="isProductInWishList" (click)="addProductToWishList(product)" class="btn btn-light me-2">
+						<i class="me-1 pi pi-heart-fill text-danger"></i>
+						İstek Listesinden Çıkar
+					</a>
 				</article>
 			</main>
 		</div>
@@ -99,7 +102,7 @@
 
 			<div class="related-product-wrapper">
 				<ng-container *ngFor="let product of categoryRelatedProducts; trackBy:identify">
-					<eb-product-item *ngIf="!!product" [product]="product"></eb-product-item>
+					<eb-product-item *ngIf="!!product" [product]="product" [wishList]="wishList"></eb-product-item>
 				</ng-container>
 			</div>
 		</div>

@@ -24,10 +24,10 @@ import { ErrorPageComponent } from '@pages/index';
 })
 export class RootModule {
 	constructor(private authService: AuthService, private cartService: CartService, private wishlistService: WishlistService) {
+		this.authService.getAuthFromLocalStorage();
+
 		this.cartService.initCartLocalStorage();
 
 		this.wishlistService.initWishlistLocalStorage();
-
-		this.authService.getAuthFromLocalStorage();
 	}
 }

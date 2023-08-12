@@ -6,28 +6,28 @@
 	<!-- Logo -->
 
 	<!-- Right -->
-	<div>
-		<a routerLink="/app/products" routerLinkActive="rl-active" pTooltip="Ürünler" tooltipPosition="bottom" type="button" class="text-white me-4">
+	<nav class="header-menu">
+		<a type="button" routerLink="/app/products" routerLinkActive="rl-active" pTooltip="Ürünler" tooltipPosition="bottom" class="header-menu-item">
 			<i class="pi pi-home"></i>
 		</a>
 
-		<!-- <a *ngIf="isLogged" routerLink="/app/wislist" routerLinkActive="rl-active" pTooltip="İstek Listesi" tooltipPosition="bottom" type="button" class="text-white me-4 btn-wrap">
-			<i class="pi pi-shopping-cart"></i>
+		<a type="button" routerLink="/app/wishlist" routerLinkActive="rl-active" pTooltip="İstek Listesi" tooltipPosition="bottom" class="header-menu-item header-menu-item-wrap">
+			<i class="pi pi-bookmark"></i>
 			<span class="number">{{ wishProductCount }}</span>
-		</a> -->
+		</a>
 
-		<a *ngIf="isLogged" routerLink="/app/cart" routerLinkActive="rl-active" pTooltip="Sepet" tooltipPosition="bottom" type="button" class="text-white me-4 btn-wrap">
+		<a type="button" routerLink="/app/cart" routerLinkActive="rl-active" pTooltip="Sepet" tooltipPosition="bottom" class="header-menu-item header-menu-item-wrap">
 			<i class="pi pi-shopping-cart"></i>
 			<span class="number">{{ cartProductCount }}</span>
 		</a>
 
-		<a *ngIf="!isLogged" routerLink="/auth/login" routerLinkActive="rl-active" pTooltip="Giriş Yap" tooltipPosition="bottom" type="button" class="text-white me-4">
+		<a *ngIf="!isLogged" type="button" routerLink="/auth/login" routerLinkActive="rl-active" pTooltip="Giriş Yap" tooltipPosition="bottom" class="header-menu-item">
 			<i class="pi pi-sign-in"></i>
 		</a>
 
-		<a *ngIf="isLogged" routerLink="/auth/logout" routerLinkActive="rl-active" pTooltip="Çıkış Yap" tooltipPosition="bottom" type="button" class="text-white me-4">
+		<a *ngIf="isLogged" type="button" routerLink="/auth/logout" routerLinkActive="rl-active" pTooltip="Çıkış Yap" tooltipPosition="bottom" class="header-menu-item">
 			<i class="pi pi-sign-out"></i>
 		</a>
-	</div>
+	</nav>
 	<!-- Right -->
 </div>

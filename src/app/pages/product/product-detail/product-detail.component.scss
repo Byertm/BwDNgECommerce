@@ -43,33 +43,8 @@
 		text-transform: uppercase;
 		top: 0;
 		right: 0;
-		background-color: #fb5231;
+		background-color: var(--red-600, #d9342b);
 		padding: 0.41em 0.83em;
-	}
-
-	.rating-stars {
-		display: inline-block;
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		position: relative;
-		white-space: nowrap;
-		clear: both;
-
-		li {
-			display: block;
-			text-overflow: clip;
-			white-space: nowrap;
-			z-index: 1;
-
-			&.stars-active {
-				z-index: 2;
-				position: absolute;
-				top: 0;
-				left: 0;
-				overflow: hidden;
-			}
-		}
 	}
 
 	.label-rating {
@@ -144,7 +119,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background-color: #fb5231;
+		background-color: #0d6efd;
 		border-radius: 999px;
 		max-width: 6.25em;
 		padding: 0.3125em 0.8125em;
@@ -206,5 +181,23 @@
 		line-height: 1.2;
 		letter-spacing: 0.5px;
 		word-spacing: 2px;
+	}
+
+	::ng-deep {
+		.p-rating {
+			cursor: not-allowed !important;
+
+			&.p-disabled {
+				opacity: 1;
+			}
+
+			.p-rating-icon {
+				cursor: inherit !important;
+
+				&.p-rating-icon-active {
+					color: var(--bs-primary);
+				}
+			}
+		}
 	}
 }

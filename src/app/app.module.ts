@@ -16,7 +16,7 @@ import { AppComponent } from '@app/app.component';
 import { ProductItemComponent } from '@components/index';
 import { HeaderComponent, MainComponent, FooterComponent } from '@layouts/index';
 import { ProductListComponent, ProductDetailComponent, CartComponent } from '@pages/index';
-import { ProductFilterPipe } from '@helpers/index';
+import { ProductFilterPipe } from '@services/search';
 
 import { EBLogoComponent } from '@shared/components';
 

@@ -13,11 +13,11 @@ export class HeaderComponent implements OnInit {
 	isLogged: boolean = true;
 	sticky: boolean = false;
 
-	constructor(private cartService: CartService, private authService: AuthService, private wishlistService: WishlistService) {}
+	constructor(private authService: AuthService, private cartService: CartService, private wishlistService: WishlistService) {}
 
 	@HostListener('window:scroll', ['$event'])
 	handleScroll() {
-		const windowScroll = window.pageYOffset;
+		const windowScroll = window.scrollY;
 		if (windowScroll >= 300) this.sticky = true;
 		else this.sticky = false;
 	}
@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
 		// this.isLogged = this.authService.getLogged();
 		this.authService.isLogging().subscribe((isLogged) => {
 			this.isLogged = isLogged;
-			console.log({ isLogged });
+			// console.log({ isLogged });
 		});
 	}
 

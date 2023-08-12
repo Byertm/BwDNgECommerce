@@ -7,7 +7,7 @@ import { NgIf } from '@angular/common';
 		<img *ngIf="!isLetterLogo" alt="BwD Logo" src="assets/images/bwd-logo.svg" class="logo-image" />
 		<img *ngIf="isLetterLogo" alt="E Letter Logo" src="assets/images/e-letter.svg" class="logo-image" />
 
-		<span class="logo-text">
+		<span class="logo-text-wrapper">
 			<span class="logo-text">Angular 16 E-Commerce Challenge</span>
 			<span class="logo-sub-text">Ersin Biltekin</span>
 			<!-- <span class="logo-slogan">Byertm Web Design</span> -->
@@ -21,10 +21,18 @@ import { NgIf } from '@angular/common';
 				.logo {
 					$wh: 3rem;
 					display: inline-flex;
+					flex-direction: column;
 					justify-content: center;
 					align-items: center;
 					gap: 1rem;
+					margin-bottom: 1rem;
 					text-decoration: none;
+
+					@media only screen and (min-width: 768px) {
+						flex-direction: row;
+						gap: 1rem;
+						margin-bottom: 0;
+					}
 
 					&-image {
 						max-width: $wh;
@@ -32,10 +40,12 @@ import { NgIf } from '@angular/common';
 						object-fit: cover;
 					}
 
-					&-text {
+					&-text-wrapper {
 						position: relative;
 						display: inline-flex;
 						flex-direction: column;
+						justify-content: center;
+						align-items: center;
 						width: 16rem;
 						min-height: $wh;
 						height: 100%;
@@ -46,6 +56,7 @@ import { NgIf } from '@angular/common';
 						.logo {
 							&-text,
 							&-sub-text {
+								width: inherit;
 								position: absolute;
 								left: 0;
 								transition: all 300ms ease-in-out;
@@ -53,7 +64,7 @@ import { NgIf } from '@angular/common';
 
 							&-text {
 								top: 50%;
-								translate: 0 -25%;
+								translate: 0 -50%;
 							}
 
 							&-sub-text {
@@ -64,8 +75,10 @@ import { NgIf } from '@angular/common';
 						}
 					}
 
-					&:hover {
-						.logo-text {
+					&:focus,
+					&:hover,
+					&:focus-within {
+						.logo-text-wrapper {
 							.logo-text {
 								top: 0;
 								translate: 0 0;
@@ -75,6 +88,14 @@ import { NgIf } from '@angular/common';
 								bottom: 0;
 								opacity: 1;
 								visibility: visible;
+							}
+
+							@media only screen and (max-width: 767px) {
+								.logo-text,
+								.logo-sub-text {
+									left: 50%;
+									translate: -50% 0;
+								}
 							}
 						}
 					}

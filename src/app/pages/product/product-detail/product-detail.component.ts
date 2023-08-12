@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, type Params } from '@angular/router';
 import { PrimeToastService } from '@services/plugins';
 import { ProductService } from '@services/index';
 import { Product, type IProduct } from '@models/index';
@@ -51,7 +51,7 @@ export class ProductDetailComponent implements OnInit {
 		this.backgroundPos = `${x}% ${y}%`;
 	}
 
-	checkProductInCartList(product: any) {
+	checkProductInCartList(product: IProduct) {
 		const cartItemExist = this.cartList.find((item) => item?.product?.id === product.id);
 		this.quantity = cartItemExist?.quantity || 0;
 		return cartItemExist;
@@ -63,8 +63,8 @@ export class ProductDetailComponent implements OnInit {
 		});
 	}
 
-	productInWishList(product: any) {
-		const WishItemExist = this.wishList.some((item) => item.product.id === product.id);
+	productInWishList(product: IProduct) {
+		const WishItemExist = this.wishList.some((item) => item.product?.id === product.id);
 		return WishItemExist;
 	}
 
@@ -100,34 +100,39 @@ export class ProductDetailComponent implements OnInit {
 		});
 	}
 
-	updateCartItemQuantity(value: number, product: any, operation: string) {
+	deleteCartItem(pProductId: number) {
+		this.cartService.deleteCartItem(pProductId);
+
+		this.primeToastService.error({ summary: 'Ürün sepetten silindi!', position: 'top-left' });
+	}
+
+	updateCartItemQuantity(value: number, product: IProduct, operation: string) {
 		if (operation === '+') value++;
 		else value--;
 
-		this.cartService.setCartItem({ product: product, quantity: value }, true);
+		if (value === 0) this.deleteCartItem(product.id);
+		else this.cartService.setCartItem({ product: product, quantity: value }, true);
 	}
 
 	addProductToCart(pProduct: IProduct) {
 		const cartItem: ICartItem = { product: pProduct, quantity: 1 };
 		this.cartService.setCartItem(cartItem);
 		this.primeToastService.success({ summary: 'Ürün başarıyla sepete eklendi!', position: 'top-left' });
-		// alert(`addProductToCart ${JSON.stringify(item)}`);
 	}
 
-	addProductToWishList(item: any) {
+	addProductToWishList(item: IProduct) {
 		const wishItem: IWishItem = { product: item };
 		if (this.isProductInWishList) {
-			this.wishlistService.deleteWishItem(wishItem.product.id);
+			this.wishlistService.deleteWishItem(wishItem.product?.id);
 			this.primeToastService.success({ summary: 'Ürün başarıyla istek listesinden çıkartıldı!', position: 'top-left' });
 		} else {
 			this.wishlistService.setWishItem(wishItem);
 			this.primeToastService.success({ summary: 'Ürün başarıyla istek listesine eklendi!', position: 'top-left' });
 		}
-		// alert(`addProductToWishList ${JSON.stringify(item)}`);
 	}
 
 	ngOnInit(): void {
-		this.route.params.subscribe((params) => {
+		this.route.params.subscribe((params: Params) => {
 			this.productId = parseInt(params['id'], 10);
 
 			this.getProduct();

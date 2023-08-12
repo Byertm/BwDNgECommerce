@@ -1,7 +1,5 @@
-import { ProductFilterPipe } from '@helpers/searchFilter.pipe';
+const exportList: any[] = [];
 
-const exportList = [ProductFilterPipe];
-
-export { ProductFilterPipe };
+export {};
 
 export default exportList;
